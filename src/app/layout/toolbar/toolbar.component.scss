@@ -1,0 +1,26 @@
+:host {
+  padding: 16px;
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  @media screen and (min-width: 265px) {
+    margin-left: auto;
+  }
+
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 6px;
+  border: 0 none;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background-color: cornflowerblue;
+  }
+}

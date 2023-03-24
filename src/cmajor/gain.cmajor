@@ -1,0 +1,49 @@
+graph Gain   [[ main ]]
+{
+    input stream float audioIn;
+    output stream float<2> audioOut;
+
+    input parameterScaler.gain  [[ name: "Gain",       min: 0, max: 100, init:  100, unit: "%",  step: 0.1 ]];
+
+    node parameterScaler   = ParameterScaler;
+
+    node dryGainSmoother   = std::smoothing::SmoothedValueStream (0.02f);
+
+    node mixer = WetDryMixer;
+
+    connection
+    {
+        audioIn -> mixer.audioInDry;
+
+        parameterScaler.dryGainOut  -> dryGainSmoother  -> mixer.dryGain;
+
+        mixer -> audioOut;
+    }
+}
+
+processor ParameterScaler
+{
+    input event float gain;
+    output event float dryGainOut;
+
+    let dryScaleFactor  = 1.0f;
+
+    event gain (float newValue)    { dryGainOut  <- newValue * dryScaleFactor / 100.0f; }
+}
+
+processor WetDryMixer
+{
+    output stream float<2> out;
+
+    input stream float audioInDry;
+    input stream float dryGain;
+
+    void main()
+    {
+        loop
+        {
+            out <- dryGain * audioInDry;
+            advance();
+        }
+    }
+}

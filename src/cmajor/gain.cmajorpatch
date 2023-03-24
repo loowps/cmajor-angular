@@ -1,0 +1,19 @@
+{
+    "CmajorVersion":    1,
+    "ID":               "loowps.cmajor.gain.customgui",
+    "version":          "1.0",
+    "name":             "Gain plugin",
+    "description":      "A simple gain plugin with Angular-based GUI",
+    "category":         "effect",
+    "manufacturer":     "Loowps",
+    "isInstrument":     false,
+
+    "source":           "Gain.cmajor",
+
+    "view":             {
+                            "src": "index.js",
+                            "width": "420px",
+                            "height": "300px",
+                            "resizable": true
+                        }
+}
