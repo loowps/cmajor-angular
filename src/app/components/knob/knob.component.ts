@@ -12,7 +12,7 @@ export class KnobComponent {
   @Input() label = '';
 
   @Input() minValue = 0;
-  @Input() maxValue = 100;
+  @Input() maxValue = 1;
   @Input() defaultValue = 0;
 
   private _value = this.defaultValue;
@@ -33,7 +33,7 @@ export class KnobComponent {
   strokeWidth = 12;
   radius = 50 - this.strokeWidth;
 
-  private readonly speedMul = 0.25;
+  private readonly speedMul = 0.0025;
 
   constructor() {
     this.onMouseMove = this.onMouseMove.bind(this);

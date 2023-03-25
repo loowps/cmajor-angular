@@ -1,49 +1,27 @@
 graph Gain   [[ main ]]
 {
-    input stream float audioIn;
-    output stream float<2> audioOut;
+    input stream float<2> in;
+    output stream float<2> out;
 
-    input parameterScaler.gain  [[ name: "Gain",       min: 0, max: 100, init:  100, unit: "%",  step: 0.1 ]];
+    input event float32 gainParam  [[ name: "Gain", min: 0, max: 1, init:  0, step: 0.01 ]];
 
-    node parameterScaler   = ParameterScaler;
+    node gainToDb = GainToDb;
+    node gain = std::levels::SmoothedGain (float<2>, 0.02f);
 
-    node dryGainSmoother   = std::smoothing::SmoothedValueStream (0.02f);
-
-    node mixer = WetDryMixer;
-
-    connection
-    {
-        audioIn -> mixer.audioInDry;
-
-        parameterScaler.dryGainOut  -> dryGainSmoother  -> mixer.dryGain;
-
-        mixer -> audioOut;
+    connection {
+        in -> gain.in;
+        gainParam -> gainToDb.gain;
+        gainToDb.volume -> gain.volume;
+        gain.out -> out;
     }
 }
 
-processor ParameterScaler
+processor GainToDb 
 {
-    input event float gain;
-    output event float dryGainOut;
+    input event float32 gain;
+    output event float32 volume;
 
-    let dryScaleFactor  = 1.0f;
-
-    event gain (float newValue)    { dryGainOut  <- newValue * dryScaleFactor / 100.0f; }
-}
-
-processor WetDryMixer
-{
-    output stream float<2> out;
-
-    input stream float audioInDry;
-    input stream float dryGain;
-
-    void main()
-    {
-        loop
-        {
-            out <- dryGain * audioInDry;
-            advance();
-        }
+    event gain(float32 f) {
+        volume <- std::levels::gainTodB (f);
     }
 }

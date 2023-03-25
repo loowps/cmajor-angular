@@ -17,6 +17,8 @@ Angular 15 with standalone components, jest, eslint, prettier, husky + lintstage
 - when loading a patch the default values don't seem to be reflected inside the host (this also happens with other
   example patches without custom gui)
 
+Tested with Cmajor Version: 0.9.1967 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
+
 #### 🔊 [Spotify] / [Apple Music] / [Bandcamp] / [Soundcloud]
 
 [cmajor]: https://github.com/SoundStacks/cmajor

@@ -1,3 +1,3 @@
 export enum PatchConnectionEndpoint {
-  Gain = 'gain',
+  Gain = 'gainParam',
 }

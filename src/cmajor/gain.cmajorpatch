@@ -1,6 +1,6 @@
 {
     "CmajorVersion":    1,
-    "ID":               "loowps.cmajor.gain.customgui",
+    "ID":               "loowps.cmajor.gain.angular",
     "version":          "1.0",
     "name":             "Gain plugin",
     "description":      "A simple gain plugin with Angular-based GUI",
