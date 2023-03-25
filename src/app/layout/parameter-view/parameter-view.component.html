@@ -1,6 +1,6 @@
 <cmaj-knob
   label="Gain"
-  [value]="$gain | async"
+  [value]="($gain | async) || 0"
   (valueChange)="handleGainValueChange($event)"
   (resetEvent)="handleGainValueChange(0)"
   (beginChange)="handleBeginGainValueChange()"

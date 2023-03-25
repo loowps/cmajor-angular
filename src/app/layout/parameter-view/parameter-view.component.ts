@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KnobComponent } from 'src/app/components/knob/knob.component';
 import { Observable } from 'rxjs';
-import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
+import { ParameterService } from 'src/app/services/parameter.service';
 
 @Component({
   selector: 'cmaj-parameter-view',
@@ -13,25 +13,27 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
   styleUrls: ['./parameter-view.component.scss'],
 })
 export class ParameterViewComponent implements OnInit {
-  readonly $gain: Observable<any>;
+  readonly $gain: Observable<undefined | number>;
 
-  constructor(private patchConnectionService: PatchConnectionService) {
-    this.$gain = patchConnectionService.$gain;
+  private readonly gainEndpoint = PatchConnectionEndpoint.Gain;
+
+  constructor(private parameterService: ParameterService) {
+    this.$gain = parameterService.registerParameter<undefined | number>(this.gainEndpoint);
   }
 
   ngOnInit(): void {
-    this.patchConnectionService.requestEndpointValue(PatchConnectionEndpoint.Gain);
+    this.parameterService.requestParameterValue(this.gainEndpoint);
   }
 
   handleBeginGainValueChange() {
-    this.patchConnectionService.sendParameterGestureStart(PatchConnectionEndpoint.Gain);
+    this.parameterService.sendParameterGestureStart(this.gainEndpoint);
   }
 
   handleEndGainValueChange() {
-    this.patchConnectionService.sendParameterGestureEnd(PatchConnectionEndpoint.Gain);
+    this.parameterService.sendParameterGestureEnd(this.gainEndpoint);
   }
 
   handleGainValueChange(newValue: number) {
-    this.patchConnectionService.sendGainValue(newValue);
+    this.parameterService.updateParameterValue(this.gainEndpoint, newValue, true);
   }
 }

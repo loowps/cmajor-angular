@@ -1,38 +1,42 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ParameterViewComponent } from 'src/app/layout/parameter-view/parameter-view.component';
-import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
+import { ParameterService } from 'src/app/services/parameter.service';
 
-describe('MainPanelComponent', () => {
+describe('ParameterViewComponent', () => {
   let component: ParameterViewComponent;
   let fixture: ComponentFixture<ParameterViewComponent>;
 
-  let patchConnectionService: PatchConnectionService;
-  let requestEndpointValue: jest.SpyInstance;
+  let parameterService: ParameterService;
+  let requestParameterValue: jest.SpyInstance;
   let sendParameterGestureStart: jest.SpyInstance;
   let sendParameterGestureEnd: jest.SpyInstance;
-  let sendGainValue: jest.SpyInstance;
+  let updateParameterValue: jest.SpyInstance;
+
+  const gainEndpointId = PatchConnectionEndpoint.Gain;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ParameterViewComponent],
     }).compileComponents();
 
-    patchConnectionService = TestBed.inject(PatchConnectionService);
+    parameterService = TestBed.inject(ParameterService);
 
-    requestEndpointValue = jest
-      .spyOn(patchConnectionService, 'requestEndpointValue')
+    requestParameterValue = jest
+      .spyOn(parameterService, 'requestParameterValue')
       .mockImplementation();
 
     sendParameterGestureStart = jest
-      .spyOn(patchConnectionService, 'sendParameterGestureStart')
+      .spyOn(parameterService, 'sendParameterGestureStart')
       .mockImplementation();
 
     sendParameterGestureEnd = jest
-      .spyOn(patchConnectionService, 'sendParameterGestureEnd')
+      .spyOn(parameterService, 'sendParameterGestureEnd')
       .mockImplementation();
 
-    sendGainValue = jest.spyOn(patchConnectionService, 'sendGainValue').mockImplementation();
+    updateParameterValue = jest
+      .spyOn(parameterService, 'updateParameterValue')
+      .mockImplementation();
 
     fixture = TestBed.createComponent(ParameterViewComponent);
     component = fixture.componentInstance;
@@ -48,7 +52,7 @@ describe('MainPanelComponent', () => {
       component.handleBeginGainValueChange();
 
       expect(sendParameterGestureStart).toHaveBeenCalledTimes(1);
-      expect(sendParameterGestureStart).toHaveBeenCalledWith(PatchConnectionEndpoint.Gain);
+      expect(sendParameterGestureStart).toHaveBeenCalledWith(gainEndpointId);
     });
   });
 
@@ -57,17 +61,17 @@ describe('MainPanelComponent', () => {
       component.handleEndGainValueChange();
 
       expect(sendParameterGestureEnd).toHaveBeenCalledTimes(1);
-      expect(sendParameterGestureEnd).toHaveBeenCalledWith(PatchConnectionEndpoint.Gain);
+      expect(sendParameterGestureEnd).toHaveBeenCalledWith(gainEndpointId);
     });
   });
 
   describe('handleGainValueChange function', () => {
-    it('should call sendGainValue once', () => {
+    it('should call updateParameterValue once', () => {
       const newValue = 123;
       component.handleGainValueChange(newValue);
 
-      expect(sendGainValue).toHaveBeenCalledTimes(1);
-      expect(sendGainValue).toHaveBeenCalledWith(newValue);
+      expect(updateParameterValue).toHaveBeenCalledTimes(1);
+      expect(updateParameterValue).toHaveBeenCalledWith(gainEndpointId, newValue, true);
     });
   });
 });

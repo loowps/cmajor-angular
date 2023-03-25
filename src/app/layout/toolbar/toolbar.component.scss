@@ -7,6 +7,14 @@
   flex-wrap: wrap;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-decoration: none;
+}
+
 .nav-button {
   @media screen and (min-width: 265px) {
     margin-left: auto;

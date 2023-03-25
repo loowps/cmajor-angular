@@ -1,5 +1,4 @@
 import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 
@@ -7,45 +6,54 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
   providedIn: 'root',
 })
 export class PatchConnectionService {
-  readonly $gain: Observable<any>;
-
-  private readonly gain: BehaviorSubject<any> = new BehaviorSubject<any>(0);
   private readonly patchConnection: PatchConnection;
 
-  constructor(private ngZone: NgZone) {
-    this.$gain = this.gain.asObservable();
+  private onParameterEndpointChangedCallback?: (
+    endpointId: PatchConnectionEndpoint,
+    newValue: any,
+  ) => void;
 
+  constructor(private ngZone: NgZone) {
     this.patchConnection = (window.parent as any).patchConnection;
     this.patchConnection.onParameterEndpointChanged = this.onParameterEndpointChanged.bind(this);
   }
 
-  requestEndpointValue(endpointID: PatchConnectionEndpoint): void {
+  setOnParameterEndpointChangedCallback(
+    callback: (endpointId: PatchConnectionEndpoint, newValue: any) => void,
+  ) {
+    this.onParameterEndpointChangedCallback = callback;
+  }
+
+  requestEndpointValue(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection.requestEndpointValue(endpointID);
+      this.patchConnection.requestEndpointValue(endpointId);
     });
   }
 
-  sendParameterGestureStart(endpointID: PatchConnectionEndpoint): void {
+  sendParameterGestureStart(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection.sendParameterGestureStart(endpointID);
+      this.patchConnection.sendParameterGestureStart(endpointId);
     });
   }
 
-  sendParameterGestureEnd(endpointID: PatchConnectionEndpoint): void {
+  sendParameterValue(endpointId: PatchConnectionEndpoint, newValue: any) {
     this.ngZone.run(() => {
-      this.patchConnection.sendParameterGestureEnd(endpointID);
+      this.patchConnection.sendEventOrValue(endpointId, newValue);
     });
   }
 
-  onParameterEndpointChanged(endpointID: PatchConnectionEndpoint, newValue: any) {
-    if (endpointID === PatchConnectionEndpoint.Gain) {
+  sendParameterGestureEnd(endpointId: PatchConnectionEndpoint): void {
+    this.ngZone.run(() => {
+      this.patchConnection.sendParameterGestureEnd(endpointId);
+    });
+  }
+
+  onParameterEndpointChanged(endpointId: PatchConnectionEndpoint, newValue: any) {
+    const callback = this.onParameterEndpointChangedCallback;
+    if (callback != null) {
       this.ngZone.run(() => {
-        this.gain.next(newValue);
+        callback(endpointId, newValue);
       });
     }
-  }
-
-  sendGainValue(newValue: number) {
-    this.patchConnection.sendEventOrValue(PatchConnectionEndpoint.Gain, newValue);
   }
 }

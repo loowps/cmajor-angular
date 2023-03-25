@@ -7,6 +7,7 @@ describe('PatchConnectionService', () => {
   let service: PatchConnectionService;
 
   let patchConnection: PatchConnection;
+  const endpointId = PatchConnectionEndpoint.Gain;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
@@ -21,7 +22,6 @@ describe('PatchConnectionService', () => {
 
   describe('requestEndpointValue function', () => {
     it('should call requestEndpointValue', () => {
-      const endpointId = PatchConnectionEndpoint.Gain;
       service.requestEndpointValue(endpointId);
 
       expect(patchConnection.requestEndpointValue).toHaveBeenCalledTimes(1);
@@ -31,7 +31,6 @@ describe('PatchConnectionService', () => {
 
   describe('sendParameterGestureStart function', () => {
     it('should call sendParameterGestureStart', () => {
-      const endpointId = PatchConnectionEndpoint.Gain;
       service.sendParameterGestureStart(endpointId);
 
       expect(patchConnection.sendParameterGestureStart).toHaveBeenCalledTimes(1);
@@ -41,7 +40,6 @@ describe('PatchConnectionService', () => {
 
   describe('sendParameterGestureEnd function', () => {
     it('should call sendParameterGestureEnd', () => {
-      const endpointId = PatchConnectionEndpoint.Gain;
       service.sendParameterGestureEnd(endpointId);
 
       expect(patchConnection.sendParameterGestureEnd).toHaveBeenCalledTimes(1);
@@ -50,38 +48,28 @@ describe('PatchConnectionService', () => {
   });
 
   describe('onParameterEndpointChanged function', () => {
-    it('should update gain with new value', done => {
-      const endpointId = PatchConnectionEndpoint.Gain;
+    it('should execute callback with endpointId and new value ', () => {
       const newValue = 123;
+      const callback = jest.fn();
+
       service.onParameterEndpointChanged(endpointId, newValue);
 
-      service.$gain.subscribe(value => {
-        expect(value).toEqual(newValue);
-        done();
-      });
-    });
+      service.setOnParameterEndpointChangedCallback(callback);
+      service.onParameterEndpointChanged(endpointId, newValue);
 
-    it('should not update gain given no matching endpoint', done => {
-      const newValue = 123;
-      service.onParameterEndpointChanged(undefined!, newValue);
-
-      service.$gain.subscribe(value => {
-        expect(value).toEqual(0);
-        done();
-      });
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith(endpointId, newValue);
     });
   });
 
-  describe('sendGainValue function', () => {
-    it('should call sendEventOrValue with gain endpointID and new value', () => {
+  describe('sendParameterValue function', () => {
+    it('should call sendEventOrValue with endpointId and new value', () => {
       const newValue = 123;
-      service.sendGainValue(newValue);
+
+      service.sendParameterValue(endpointId, newValue);
 
       expect(patchConnection.sendEventOrValue).toHaveBeenCalledTimes(1);
-      expect(patchConnection.sendEventOrValue).toHaveBeenCalledWith(
-        PatchConnectionEndpoint.Gain,
-        newValue,
-      );
+      expect(patchConnection.sendEventOrValue).toHaveBeenCalledWith(endpointId, newValue);
     });
   });
 });
