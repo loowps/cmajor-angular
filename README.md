@@ -4,20 +4,24 @@
 
 Proof of concept [cmajor] gain fx patch with [angular] gui.
 
-Use `npm run build` and afterwards load the .cmajorpatch within the dist directory via the cmaj plugin within a daw.
+To test the patch simply run `npm install` and `npm run build` and afterwards drag the .cmajorpatch from
+the dist directory to the cmaj-plugin within your daw.
 
-Angular 15 with standalone components, jest, eslint, prettier, husky + lintstaged.
+For development use `npm run watch` to rebuild the patch on change.
+With the current solution you still have to manually refresh the webview within the plugin to update the gui.
+
+Alternatively run `npm start` to simply open the gui in a browser (no patch connection provided).
+
+Setup: Angular 15 with standalone components, jest, eslint, prettier, husky + lintstaged
+Tested with Cmajor Version: 0.9.1967 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
 
 #### Known issues / future improvements
 
 - patch run in vscode does not display any gui (probably caused by the iframe, loading the patch via cmajor plugin in a
   daw works)
-- with `npm run watch` the patch is rebuild on change, but you have to manually reload the patch inside the plugin
 - the pointer lock api causes a notification within the webview to use the ESC button
 - when loading a patch the default values don't seem to be reflected inside the host (this also happens with other
   example patches without custom gui)
-
-Tested with Cmajor Version: 0.9.1967 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
 
 #### 🔊 [Spotify] / [Apple Music] / [Bandcamp] / [Soundcloud]
 
