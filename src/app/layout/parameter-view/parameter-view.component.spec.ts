@@ -71,7 +71,10 @@ describe('ParameterViewComponent', () => {
       component.handleGainValueChange(newValue);
 
       expect(updateParameterValue).toHaveBeenCalledTimes(1);
-      expect(updateParameterValue).toHaveBeenCalledWith(gainEndpointId, newValue, true);
+      expect(updateParameterValue).toHaveBeenCalledWith(
+        { endpointID: gainEndpointId, value: newValue },
+        true,
+      );
     });
   });
 });

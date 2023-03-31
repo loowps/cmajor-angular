@@ -28,15 +28,28 @@ Object.defineProperty(document.body.style, 'transform', {
 });
 
 const mockPatchConnection: PatchConnection = {
-  onEndpointEvent: jest.fn(),
-  onPatchStatusChanged: jest.fn(),
-  onSampleRateChanged: jest.fn(),
   requestStatusUpdate: jest.fn(),
+  addStatusListener: jest.fn(),
+  removeStatusListener: jest.fn(),
+  resetToInitialState: jest.fn(),
   sendEventOrValue: jest.fn(),
-  sendParameterGestureEnd: jest.fn(),
+  sendMIDIInputEvent: jest.fn(),
   sendParameterGestureStart: jest.fn(),
-  requestEndpointValue: jest.fn(),
-  onParameterEndpointChanged: jest.fn(),
+  sendParameterGestureEnd: jest.fn(),
+  requestStoredStateValue: jest.fn(),
+  sendStoredStateValue: jest.fn(),
+  addStoredStateValueListener: jest.fn(),
+  removeStoredStateValueListener: jest.fn(),
+  sendFullStoredState: jest.fn(),
+  requestFullStoredState: jest.fn(),
+  addEndpointEventListener: jest.fn(),
+  removeEndpointEventListener: jest.fn(),
+  requestParameterValue: jest.fn(),
+  addParameterListener: jest.fn(),
+  removeParameterListener: jest.fn(),
+  addAllParameterListener: jest.fn(),
+  removeAllParameterListener: jest.fn(),
+  getResourceAddress: jest.fn(),
 };
 
 Object.defineProperty(window, 'parent', {

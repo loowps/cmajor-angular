@@ -23,7 +23,11 @@ export class ParameterService {
     return parameter.asObservable();
   }
 
-  updateParameterValue(endpointId: PatchConnectionEndpoint, newValue: any, sendToPatch = false) {
+  updateParameterValue(
+    args: { endpointID: PatchConnectionEndpoint; value: any },
+    sendToPatch = false,
+  ) {
+    const { endpointID: endpointId, value: newValue } = args;
     const paramToUpdate = this.parameters.get(endpointId);
 
     if (paramToUpdate != null && paramToUpdate.getValue() !== newValue) {

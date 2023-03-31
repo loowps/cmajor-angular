@@ -47,9 +47,12 @@ describe('ParameterService', () => {
         done();
       });
 
-      service.updateParameterValue(endpointId, newValue, true);
-      service.updateParameterValue(endpointId, newValue);
-      service.updateParameterValue('unknownEndpoint' as PatchConnectionEndpoint, 456);
+      service.updateParameterValue({ endpointID: endpointId, value: newValue }, true);
+      service.updateParameterValue({ endpointID: endpointId, value: newValue });
+      service.updateParameterValue({
+        endpointID: 'unknownEndpoint' as PatchConnectionEndpoint,
+        value: 456,
+      });
     });
   });
 

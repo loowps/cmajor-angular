@@ -34,6 +34,9 @@ export class ParameterViewComponent implements OnInit {
   }
 
   handleGainValueChange(newValue: number) {
-    this.parameterService.updateParameterValue(this.gainEndpoint, newValue, true);
+    this.parameterService.updateParameterValue(
+      { endpointID: this.gainEndpoint, value: newValue },
+      true,
+    );
   }
 }

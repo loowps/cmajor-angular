@@ -24,8 +24,8 @@ describe('PatchConnectionService', () => {
     it('should call requestEndpointValue', () => {
       service.requestEndpointValue(endpointId);
 
-      expect(patchConnection.requestEndpointValue).toHaveBeenCalledTimes(1);
-      expect(patchConnection.requestEndpointValue).toHaveBeenCalledWith(endpointId);
+      expect(patchConnection.requestParameterValue).toHaveBeenCalledTimes(1);
+      expect(patchConnection.requestParameterValue).toHaveBeenCalledWith(endpointId);
     });
   });
 
@@ -52,13 +52,13 @@ describe('PatchConnectionService', () => {
       const newValue = 123;
       const callback = jest.fn();
 
-      service.onParameterEndpointChanged(endpointId, newValue);
+      service.onParameterEndpointChanged({ endpointID: endpointId, value: newValue });
 
       service.setOnParameterEndpointChangedCallback(callback);
-      service.onParameterEndpointChanged(endpointId, newValue);
+      service.onParameterEndpointChanged({ endpointID: endpointId, value: newValue });
 
       expect(callback).toHaveBeenCalledTimes(1);
-      expect(callback).toHaveBeenCalledWith(endpointId, newValue);
+      expect(callback).toHaveBeenCalledWith({ endpointID: endpointId, value: newValue });
     });
   });
 

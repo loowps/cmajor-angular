@@ -13,7 +13,7 @@ With the current solution you still have to manually refresh the webview within 
 Alternatively run `npm start` to simply open the gui in a browser (no patch connection provided).
 
 Setup: Angular 15 with standalone components, jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 0.9.1967 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
+Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
 
 #### Known issues / future improvements
 
