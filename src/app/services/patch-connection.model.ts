@@ -7,7 +7,7 @@ export interface PatchConnection {
    * Calling this will trigger an asynchronous callback to any status listeners with the patch's current state.
    * Use addStatusListener() to attach a listener to receive it.
    */
-  requestStatusUpdate: () => void;
+  requestStatusUpdate(): void;
 
   /**
    * Attaches a listener function that will be called whenever the patch's status changes. The function will be
@@ -46,11 +46,7 @@ export interface PatchConnection {
    * @param value
    * @param optionalNumFrames
    */
-  sendEventOrValue: (
-    endpointID: PatchConnectionEndpoint,
-    value: any,
-    optionalNumFrames?: any,
-  ) => void;
+  sendEventOrValue(endpointID: PatchConnectionEndpoint, value: any, optionalNumFrames?: any): void;
 
   /**
    * Sends a short MIDI message value to a MIDI endpoint.
@@ -65,13 +61,13 @@ export interface PatchConnection {
    * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
    * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
    */
-  sendParameterGestureStart: (endpointID: PatchConnectionEndpoint) => void;
+  sendParameterGestureStart(endpointID: PatchConnectionEndpoint): void;
 
   /*
    * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
    * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
    */
-  sendParameterGestureEnd: (endpointID: PatchConnectionEndpoint) => void;
+  sendParameterGestureEnd(endpointID: PatchConnectionEndpoint): void;
 
   // endregion
 
@@ -151,7 +147,7 @@ export interface PatchConnection {
    *
    * @param endpointID
    */
-  requestParameterValue: (endpointID: PatchConnectionEndpoint) => any;
+  requestParameterValue(endpointID: PatchConnectionEndpoint): any;
 
   /**
    * Attaches a listener function which will be called whenever the value of a specific parameter changes. The listener
