@@ -7,51 +7,48 @@ describe('ParameterService', () => {
   let service: ParameterService;
   let patchConnectionService: PatchConnectionService;
 
-  let setOnParameterEndpointChangedCallback: jest.SpyInstance;
-
   const endpointId = 'xyz' as PatchConnectionEndpoint;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     patchConnectionService = TestBed.inject(PatchConnectionService);
-    setOnParameterEndpointChangedCallback = jest
-      .spyOn(patchConnectionService, 'setOnParameterEndpointChangedCallback')
-      .mockImplementation();
 
     service = TestBed.inject(ParameterService);
   });
 
-  it('should be created and init patch connection parameter endpoint changed callback', () => {
-    expect(setOnParameterEndpointChangedCallback).toHaveBeenCalledTimes(1);
-    expect(setOnParameterEndpointChangedCallback).toHaveBeenCalledWith(
-      service.updateParameterValue,
-    );
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('param lifecycle: registerParameter and updateParameterValue function', () => {
-    it('should register a new param once that can be updated', done => {
+  describe('param lifecycle: addParameter and sendParameterValue function', () => {
+    it('should add a new param once that can be updated', done => {
       const newValue = 123;
+      const sentValue = 456;
       const sendParameterValue = jest
         .spyOn(patchConnectionService, 'sendParameterValue')
         .mockImplementation();
 
-      const paramObservable = service.registerParameter(endpointId);
-      service.registerParameter(endpointId);
+      const addParameterListener = jest
+        .spyOn(patchConnectionService, 'addParameterListener')
+        .mockImplementation();
+
+      const paramObservable = service.addParameter(endpointId);
+      service.addParameter(endpointId);
+
+      expect(addParameterListener).toHaveBeenCalledTimes(1);
+      expect(addParameterListener).toHaveBeenCalledWith(endpointId, expect.any(Function));
+
+      addParameterListener.mock.calls[0][1](newValue);
+
+      service.sendParameterValue({ endpointID: endpointId, value: newValue });
+      service.sendParameterValue({ endpointID: endpointId, value: sentValue });
 
       paramObservable.subscribe(value => {
         expect(sendParameterValue).toHaveBeenCalledTimes(1);
-        expect(sendParameterValue).toHaveBeenCalledWith(endpointId, newValue);
+        expect(sendParameterValue).toHaveBeenCalledWith(endpointId, sentValue);
 
         expect(value).toEqual(newValue);
         done();
-      });
-
-      service.updateParameterValue({ endpointID: endpointId, value: newValue }, true);
-      service.updateParameterValue({ endpointID: endpointId, value: newValue });
-      service.updateParameterValue({
-        endpointID: 'unknownEndpoint' as PatchConnectionEndpoint,
-        value: 456,
       });
     });
   });

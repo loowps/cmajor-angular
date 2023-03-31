@@ -16,14 +16,14 @@ export interface PatchConnection {
    *
    * @param listener
    */
-  addStatusListener(listener: Function): void;
+  addStatusListener(listener: (status: any) => void): void;
 
   /**
    * Removes a listener that was previously added with addStatusListener()
    *
    * @param listener
    */
-  removeStatusListener(listener: Function): void;
+  removeStatusListener(listener: (status: any) => void): void;
 
   /**
    * Causes the patch to be reset to its "just loaded" state.
@@ -95,14 +95,14 @@ export interface PatchConnection {
    *
    * @param listener
    */
-  addStoredStateValueListener(listener: Function): void;
+  addStoredStateValueListener(listener: (storedState: any) => void): void;
 
   /**
    * Removes a listener that was previously added with addStoredStateValueListener().
    *
    * @param listener
    */
-  removeStoredStateValueListener(listener: Function): void;
+  removeStoredStateValueListener(listener: (storedState: any) => void): void;
 
   /**
    *  Applies a complete stored state to the patch. To get the current complete state, use requestFullStoredState().
@@ -117,7 +117,7 @@ export interface PatchConnection {
    *
    * @param callback
    */
-  requestFullStoredState(callback: Function): void;
+  requestFullStoredState(callback: (fullStoredState: any) => void): void;
 
   // endregion
 
@@ -131,7 +131,10 @@ export interface PatchConnection {
    * @param endpointID
    * @param listener
    */
-  addEndpointEventListener(endpointID: PatchConnectionEndpoint, listener: Function): void;
+  addEndpointEventListener(
+    endpointID: PatchConnectionEndpoint,
+    listener: (value: any) => void,
+  ): void;
 
   /**
    * Removes a listener that was previously added with addEndpointEventListener()
@@ -139,7 +142,10 @@ export interface PatchConnection {
    * @param endpointID
    * @param listener
    */
-  removeEndpointEventListener(endpointID: PatchConnectionEndpoint, listener: Function): void;
+  removeEndpointEventListener(
+    endpointID: PatchConnectionEndpoint,
+    listener: (value: any) => void,
+  ): void;
 
   /**
    * Request the current value for a given input endpoint
@@ -156,7 +162,7 @@ export interface PatchConnection {
    * @param endpointID
    * @param listener
    */
-  addParameterListener(endpointID: PatchConnectionEndpoint, listener: Function): any;
+  addParameterListener(endpointID: PatchConnectionEndpoint, listener: (value: any) => void): any;
 
   /**
    * Removes a listener that was previously added with addParameterListener()
@@ -164,7 +170,7 @@ export interface PatchConnection {
    * @param endpointID
    * @param listener
    */
-  removeParameterListener(endpointID: PatchConnectionEndpoint, listener: Function): any;
+  removeParameterListener(endpointID: PatchConnectionEndpoint, listener: (value: any) => void): any;
 
   /**
    * Attaches a listener function which will be called whenever the value of any parameter changes in the patch.
@@ -181,7 +187,9 @@ export interface PatchConnection {
    *
    * @param listener
    */
-  removeAllParameterListener(listener: Function): void;
+  removeAllParameterListener(
+    listener: (args: { endpointID: PatchConnectionEndpoint; value: any }) => void,
+  ): void;
 
   // region Asset handling methods
 

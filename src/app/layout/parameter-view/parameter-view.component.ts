@@ -18,7 +18,7 @@ export class ParameterViewComponent implements OnInit {
   private readonly gainEndpoint = PatchConnectionEndpoint.Gain;
 
   constructor(private parameterService: ParameterService) {
-    this.$gain = parameterService.registerParameter<undefined | number>(this.gainEndpoint);
+    this.$gain = parameterService.addParameter<undefined | number>(this.gainEndpoint);
   }
 
   ngOnInit(): void {
@@ -34,9 +34,6 @@ export class ParameterViewComponent implements OnInit {
   }
 
   handleGainValueChange(newValue: number) {
-    this.parameterService.updateParameterValue(
-      { endpointID: this.gainEndpoint, value: newValue },
-      true,
-    );
+    this.parameterService.sendParameterValue({ endpointID: this.gainEndpoint, value: newValue });
   }
 }
