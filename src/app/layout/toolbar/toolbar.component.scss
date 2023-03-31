@@ -13,6 +13,12 @@
   gap: 16px;
   flex-wrap: wrap;
   text-decoration: none;
+  transition: transform 50ms ease-in-out;
+  transform-origin: center center;
+
+  &:hover {
+    transform: scaleX(1.05) scaleY(1.05);
+  }
 }
 
 .nav-button {
@@ -21,14 +27,21 @@
   }
 
   background-color: transparent;
-  border-radius: 3px;
+  border-radius: 2px;
   padding: 6px;
   border: 0 none;
-  color: white;
+  color: #f8f8f8;
   cursor: pointer;
   font-weight: bold;
+  transition: background-color, color 75ms ease;
+  min-width: 64px;
 
-  &:hover {
-    background-color: cornflowerblue;
+  &:active {
+    background-color: #3e679d !important;
+    color: #dcdcdc;
+  }
+
+  &:hover:not(:active) {
+    background-color: #5481c2;
   }
 }

@@ -33,3 +33,30 @@ p {
 a {
   color: white;
 }
+
+.primary-button {
+  background-color: #4573b9;
+  border-radius: 3px;
+  padding: 6px;
+  border: 0 none;
+  color: #f8f8f8;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color, color 75ms ease;
+
+  a {
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: #3e679d !important;
+    color: #dcdcdc !important;
+  }
+
+  &:hover:not(:active) {
+    background-color: #5481c2;
+    color: white;
+  }
+}
