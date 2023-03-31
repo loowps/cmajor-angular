@@ -11,7 +11,7 @@ describe('ParameterViewComponent', () => {
   let requestParameterValue: jest.SpyInstance;
   let sendParameterGestureStart: jest.SpyInstance;
   let sendParameterGestureEnd: jest.SpyInstance;
-  let updateParameterValue: jest.SpyInstance;
+  let sendParameterValue: jest.SpyInstance;
 
   const gainEndpointId = PatchConnectionEndpoint.Gain;
 
@@ -34,9 +34,7 @@ describe('ParameterViewComponent', () => {
       .spyOn(parameterService, 'sendParameterGestureEnd')
       .mockImplementation();
 
-    updateParameterValue = jest
-      .spyOn(parameterService, 'updateParameterValue')
-      .mockImplementation();
+    sendParameterValue = jest.spyOn(parameterService, 'sendParameterValue').mockImplementation();
 
     fixture = TestBed.createComponent(ParameterViewComponent);
     component = fixture.componentInstance;
@@ -70,8 +68,11 @@ describe('ParameterViewComponent', () => {
       const newValue = 123;
       component.handleGainValueChange(newValue);
 
-      expect(updateParameterValue).toHaveBeenCalledTimes(1);
-      expect(updateParameterValue).toHaveBeenCalledWith(gainEndpointId, newValue, true);
+      expect(sendParameterValue).toHaveBeenCalledTimes(1);
+      expect(sendParameterValue).toHaveBeenCalledWith({
+        endpointID: gainEndpointId,
+        value: newValue,
+      });
     });
   });
 });

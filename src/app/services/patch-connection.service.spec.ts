@@ -24,8 +24,8 @@ describe('PatchConnectionService', () => {
     it('should call requestEndpointValue', () => {
       service.requestEndpointValue(endpointId);
 
-      expect(patchConnection.requestEndpointValue).toHaveBeenCalledTimes(1);
-      expect(patchConnection.requestEndpointValue).toHaveBeenCalledWith(endpointId);
+      expect(patchConnection.requestParameterValue).toHaveBeenCalledTimes(1);
+      expect(patchConnection.requestParameterValue).toHaveBeenCalledWith(endpointId);
     });
   });
 
@@ -47,18 +47,23 @@ describe('PatchConnectionService', () => {
     });
   });
 
-  describe('onParameterEndpointChanged function', () => {
-    it('should execute callback with endpointId and new value ', () => {
+  describe('addParameterListener function', () => {
+    it('should call addParameterListener and execute callback with new value ', () => {
       const newValue = 123;
       const callback = jest.fn();
 
-      service.onParameterEndpointChanged(endpointId, newValue);
+      service.addParameterListener(endpointId, callback);
 
-      service.setOnParameterEndpointChangedCallback(callback);
-      service.onParameterEndpointChanged(endpointId, newValue);
+      expect(patchConnection.addParameterListener).toHaveBeenCalledTimes(1);
+      expect(patchConnection.addParameterListener).toHaveBeenCalledWith(
+        endpointId,
+        expect.any(Function),
+      );
+
+      (patchConnection.addParameterListener as jest.Mock).mock.calls[0][1](newValue);
 
       expect(callback).toHaveBeenCalledTimes(1);
-      expect(callback).toHaveBeenCalledWith(endpointId, newValue);
+      expect(callback).toHaveBeenCalledWith(newValue);
     });
   });
 

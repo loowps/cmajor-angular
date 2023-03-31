@@ -8,28 +8,13 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
 export class PatchConnectionService {
   private readonly patchConnection?: PatchConnection;
 
-  private onParameterEndpointChangedCallback?: (
-    endpointId: PatchConnectionEndpoint,
-    newValue: any,
-  ) => void;
-
   constructor(private ngZone: NgZone) {
     this.patchConnection = (window.parent as any).patchConnection;
-
-    if (this.patchConnection) {
-      this.patchConnection.onParameterEndpointChanged = this.onParameterEndpointChanged.bind(this);
-    }
-  }
-
-  setOnParameterEndpointChangedCallback(
-    callback: (endpointId: PatchConnectionEndpoint, newValue: any) => void,
-  ) {
-    this.onParameterEndpointChangedCallback = callback;
   }
 
   requestEndpointValue(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection?.requestEndpointValue(endpointId);
+      this.patchConnection?.requestParameterValue(endpointId);
     });
   }
 
@@ -51,12 +36,10 @@ export class PatchConnectionService {
     });
   }
 
-  onParameterEndpointChanged(endpointId: PatchConnectionEndpoint, newValue: any) {
-    const callback = this.onParameterEndpointChangedCallback;
-    if (callback) {
-      this.ngZone.run(() => {
-        callback(endpointId, newValue);
-      });
-    }
+  addParameterListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void) {
+    const onChange = (newValue: any) => {
+      this.ngZone.run(() => callback(newValue));
+    };
+    this.patchConnection?.addParameterListener(endpointId, onChange);
   }
 }

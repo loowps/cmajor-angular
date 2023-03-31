@@ -1,41 +1,151 @@
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 
 export interface PatchConnection {
-  /*
-   * Notify the runtime that a given input endpoint (either an event or value) should change to the given value.
-   * The value will typically be a primitive number, or boolean, but it can also be a javascript object.
-   * e.g. to update an endpoint of type std::timeline::Tempo, send a value like { bpm: 120.0 } and the runtime will
-   * take care of converting it to a std::timeline::Tempo.
-   * In the case of a value endpoint, an optional frame count can be specified, which the runtime will use to smoothly
-   * interpolate between the current value and the target value.
-   * If the runtime accepts the change, it will asynchronously notify the client
-   * by invoking the onParameterEndpointChanged callback.
-   * Typically this will be invoked multiple times when changing a UI control like a slider,
-   * bookended by calls to the gesture actions described below.
-   */
-  sendEventOrValue: (
-    endpointID: PatchConnectionEndpoint,
-    value: any,
-    optionalNumFrames?: any,
-  ) => void;
-
-  /*
-   * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
-   * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
-   */
-  sendParameterGestureStart: (endpointID: PatchConnectionEndpoint) => void;
-
-  /*
-   * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
-   * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
-   */
-  sendParameterGestureEnd: (endpointID: PatchConnectionEndpoint) => void;
+  // region Status-handling methods
 
   /**
-   * Request the current manifest and endpoint details
-   * The runtime will asynchronously call back to onPatchStatusChanged
+   * Calling this will trigger an asynchronous callback to any status listeners with the patch's current state.
+   * Use addStatusListener() to attach a listener to receive it.
    */
-  requestStatusUpdate: () => void;
+  requestStatusUpdate(): void;
+
+  /**
+   * Attaches a listener function that will be called whenever the patch's status changes. The function will be
+   * called with a parameter object containing many properties describing the status, including whether the patch
+   * is loaded, any errors, endpoint descriptions, its manifest, etc.
+   *
+   * @param listener
+   */
+  addStatusListener(listener: (status: any) => void): void;
+
+  /**
+   * Removes a listener that was previously added with addStatusListener()
+   *
+   * @param listener
+   */
+  removeStatusListener(listener: (status: any) => void): void;
+
+  /**
+   * Causes the patch to be reset to its "just loaded" state.
+   */
+  resetToInitialState(): void;
+
+  // endregion
+
+  // region Methods for sending data to input endpoints
+
+  /**
+   * Sends a value to one of the patch's input endpoints. This can be used to send a value to either an 'event'
+   * or 'value' type input endpoint. If the endpoint is a 'value' type, then the rampFrames parameter can optionally
+   * be used to specify the number of frames over which the current value should ramp to the new target one.
+   * The value parameter will be coerced to the type that is expected by the endpoint. So for examples,
+   * numbers will be converted to float or integer types, javascript objects and arrays will be converted into
+   * more complex types in as good a fashion is possible.
+   *
+   * @param endpointID
+   * @param value
+   * @param optionalNumFrames
+   */
+  sendEventOrValue(endpointID: PatchConnectionEndpoint, value: any, optionalNumFrames?: any): void;
+
+  /**
+   * Sends a short MIDI message value to a MIDI endpoint.
+   * The value must be a number encoded with (byte0 << 16) | (byte1 << 8) | byte2
+   *
+   * @param endpointID
+   * @param shortMIDICode
+   */
+  sendMIDIInputEvent(endpointID: PatchConnectionEndpoint, shortMIDICode: number): any;
+
+  /*
+   * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
+   * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
+   */
+  sendParameterGestureStart(endpointID: PatchConnectionEndpoint): void;
+
+  /*
+   * These are used by host applications when recording automation, indicating that the user is holding a given parameter.
+   * The gesture calls must always be matched (a GestureEnd action must eventually follow a GestureStart action).
+   */
+  sendParameterGestureEnd(endpointID: PatchConnectionEndpoint): void;
+
+  // endregion
+
+  // region Stored state control methods
+
+  /**
+   * Requests a callback to any stored-state value listeners with the current value of a given key-value pair.
+   * To attach a listener to receive these events, use addStoredStateValueListener().
+   *
+   * @param key
+   */
+  requestStoredStateValue(key: string): any;
+
+  /**
+   * Modifies a key-value pair in the patch's stored state.
+   *
+   * @param key
+   * @param newValue
+   */
+  sendStoredStateValue(key: string, newValue: any): void;
+
+  /**
+   * Attaches a listener function that will be called when any key-value pair in the stored state is changed.
+   * The listener function will receive a message parameter with properties key and value.
+   *
+   * @param listener
+   */
+  addStoredStateValueListener(listener: (storedState: any) => void): void;
+
+  /**
+   * Removes a listener that was previously added with addStoredStateValueListener().
+   *
+   * @param listener
+   */
+  removeStoredStateValueListener(listener: (storedState: any) => void): void;
+
+  /**
+   *  Applies a complete stored state to the patch. To get the current complete state, use requestFullStoredState().
+   *
+   * @param fullState
+   */
+  sendFullStoredState(fullState: any): void;
+
+  /**
+   * Asynchronously requests the full stored state of the patch. The listener function that is supplied will
+   * be called asynchronously with the state as its argument.
+   *
+   * @param callback
+   */
+  requestFullStoredState(callback: (fullStoredState: any) => void): void;
+
+  // endregion
+
+  // region Listener methods
+
+  /**
+   * Attaches a listener function which will be called whenever an event passes through a specific endpoint.
+   * This can be used to monitor both input and output endpoints.
+   * The listener function will be called with an argument which is the value of the event.
+   *
+   * @param endpointID
+   * @param listener
+   */
+  addEndpointEventListener(
+    endpointID: PatchConnectionEndpoint,
+    listener: (value: any) => void,
+  ): void;
+
+  /**
+   * Removes a listener that was previously added with addEndpointEventListener()
+   *
+   * @param endpointID
+   * @param listener
+   */
+  removeEndpointEventListener(
+    endpointID: PatchConnectionEndpoint,
+    listener: (value: any) => void,
+  ): void;
 
   /**
    * Request the current value for a given input endpoint
@@ -43,57 +153,56 @@ export interface PatchConnection {
    *
    * @param endpointID
    */
-  requestEndpointValue: (endpointID: PatchConnectionEndpoint) => any;
+  requestParameterValue(endpointID: PatchConnectionEndpoint): any;
 
   /**
-   * This will be called in response to a requestStatusUpdate() request, or following each recompile errorMessage
-   * will contain any output from an unsuccessful compile run, or otherwise be empty patchManifest is the same
-   * information specified in the cmajorpatch file inputsList and outputsList are arrays of javascript object
-   * representations of the cmaj::EndpointDetails structures described in the C++ API docs. See EndpointDetails::toJSON()
-   * for the specific implementation details
-   *
-   * @param errorMessage
-   * @param patchManifest
-   * @param inputList
-   * @param outputList
-   */
-  onPatchStatusChanged: (
-    errorMessage: string,
-    patchManifest: any,
-    inputList: any,
-    outputList: any,
-  ) => void;
-
-  /**
-   * This will be called following changes to the sample rate within the host, or following each recompile
-   *
-   * update any UI state that needs the sample rate information
-   *
-   * @param newSampleRate
-   */
-  onSampleRateChanged: (newSampleRate: number) => void;
-
-  /**
-   * This will be called following a change to an input endpoint parameter
-   * (i.e. after processing a sendEventOrValue call, or from an external change via the host),
-   * or following a requestEndpointValue request
-   *
-   * update UI state for endpoint, typically some kind of knob, slider, etc
+   * Attaches a listener function which will be called whenever the value of a specific parameter changes. The listener
+   * function will be called with an argument which is the new value.
    *
    * @param endpointID
-   * @param newValue
+   * @param listener
    */
-  onParameterEndpointChanged: (endpointID: PatchConnectionEndpoint, newValue: any) => void;
+  addParameterListener(endpointID: PatchConnectionEndpoint, listener: (value: any) => void): any;
 
   /**
-   * The value here can be a scalar value (a primitive number or boolean), an array, or a javascript object.
-   * If the endpoint type is an aggregate / struct, the runtime will convert it to a javascript object,
-   * i.e there will be a key for each field name in the struct
-   *
-   * update UI state for endpoint, typically some kind of visualisation
+   * Removes a listener that was previously added with addParameterListener()
    *
    * @param endpointID
-   * @param newValue
+   * @param listener
    */
-  onEndpointEvent: (endpointID: string, newValue: any) => void;
+  removeParameterListener(endpointID: PatchConnectionEndpoint, listener: (value: any) => void): any;
+
+  /**
+   * Attaches a listener function which will be called whenever the value of any parameter changes in the patch.
+   * The listener function will be called with an argument object with the fields endpointID and value.
+   *
+   * @param listener
+   */
+  addAllParameterListener(
+    listener: (args: { endpointID: PatchConnectionEndpoint; value: any }) => void,
+  ): any;
+
+  /**
+   * Removes a listener that was previously added with addAllParameterListener()
+   *
+   * @param listener
+   */
+  removeAllParameterListener(
+    listener: (args: { endpointID: PatchConnectionEndpoint; value: any }) => void,
+  ): void;
+
+  // region Asset handling methods
+
+  /**
+   * This takes a relative path to an asset within the patch bundle, and converts it to a path relative
+   * to the root of the browser that is showing the view. You need you use this in your view code
+   * to translate your asset URLs to a form that can be safely used in your view's HTML DOM (e.g. in its CSS).
+   * This is needed because the host's HTTP server (which is delivering your view pages) may have a different '/'
+   * root than the root of your patch (e.g. if a single server is serving multiple patch GUIs).
+   *
+   * @param path
+   */
+  getResourceAddress(path: string): string;
+
+  // endregion
 }
