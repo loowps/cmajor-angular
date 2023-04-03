@@ -11,7 +11,7 @@
     "source":           "Gain.cmajor",
 
     "view":             {
-                            "src": "index.js",
+                            "src": "main.js",
                             "width": "420px",
                             "height": "300px",
                             "resizable": true
