@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToolbarComponent } from 'src/app/layout/toolbar/toolbar.component';
 import { ParameterViewComponent } from 'src/app/layout/parameter-view/parameter-view.component';
-import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
+import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
 import { slideInAnimation } from 'src/app/shared/animations/slide-in-animation';
 
 @Component({
@@ -12,8 +12,12 @@ import { slideInAnimation } from 'src/app/shared/animations/slide-in-animation';
   imports: [ToolbarComponent, ParameterViewComponent, RouterOutlet],
   animations: [slideInAnimation],
 })
-export class AppComponent {
-  constructor(private contexts: ChildrenOutletContexts) {}
+export class AppComponent implements OnInit {
+  constructor(private contexts: ChildrenOutletContexts, private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.initialNavigation();
+  }
 
   getRouteAnimationData() {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];

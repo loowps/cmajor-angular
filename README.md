@@ -2,31 +2,29 @@
 
 ![cmajorpatch screenshot](screenshot.png)
 
-Proof of concept [cmajor] gain fx patch with [angular] gui.
+Proof of concept [cmajor] gain fx patch with [angular] gui built to a single web component.
 
-To test the patch simply run `npm install` and `npm run build` and afterwards drag the .cmajorpatch from
-the dist directory to the cmaj-plugin within your daw.
+To test the patch simply run `npm install` and `npm run build`. Afterward drag the .cmajorpatch from
+the dist directory to the cmaj-plugin within your daw or play the patch via the cmaj comman line tool.
 
-For development use `npm run watch` to rebuild the patch on change.
-With the current solution you still have to manually refresh the webview within the plugin to update the gui.
+For development use `npm start` to rebuild the patch on change.
 
-Alternatively run `npm start` to simply open the gui in a browser (no patch connection provided).
-
-Setup: Angular 15 with standalone components, jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v4.3 on Windows 10.
+Setup: Angular 15 with standalone components, experimental [esbuild], [angular-elements],
+jest, eslint, prettier, husky + lintstaged
+Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v4.4 on Windows 10.
 
 #### Known issues / future improvements
 
-- patch run in vscode does not display any gui (probably caused by the iframe, loading the patch via cmajor plugin in a
-  daw works)
+- currently running the patch via the vscode extension does not seem to work
 - the pointer lock api causes a notification within the webview to use the ESC button
-- when loading a patch the default values don't seem to be reflected inside the host (this also happens with other
-  example patches without custom gui)
+- when loading a patch the default values don't seem to be reflected inside the host
 
 #### 🔊 [Spotify] / [Apple Music] / [Bandcamp] / [Soundcloud]
 
 [cmajor]: https://github.com/SoundStacks/cmajor
 [angular]: https://angular.io/
+[angular-elements]: https://angular.io/guide/elements
+[esbuild]: https://esbuild.github.io/
 [Spotify]: https://open.spotify.com/artist/2jOQrKX3rRoZORPfFcXaYU
 [Apple Music]: https://music.apple.com/us/artist/loowps/1326334750
 [Bandcamp]: https://loowps.bandcamp.com
