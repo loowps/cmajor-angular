@@ -13,7 +13,10 @@ import { slideInAnimation } from 'src/app/shared/animations/slide-in-animation';
   animations: [slideInAnimation],
 })
 export class AppComponent implements OnInit {
-  constructor(private contexts: ChildrenOutletContexts, private router: Router) {}
+  constructor(
+    private contexts: ChildrenOutletContexts,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.router.initialNavigation();
