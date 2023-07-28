@@ -51,7 +51,9 @@
     color: #f8f8f8;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color, color 75ms ease;
+    transition:
+      background-color,
+      color 75ms ease;
 
     a {
       color: inherit;

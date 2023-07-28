@@ -43,6 +43,9 @@ describe('ParameterViewComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+
+    expect(requestParameterValue).toHaveBeenCalledTimes(1);
+    expect(requestParameterValue).toHaveBeenCalledWith(gainEndpointId);
   });
 
   describe('handleBeginGainValueChange function', () => {
