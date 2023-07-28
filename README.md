@@ -5,13 +5,13 @@
 Proof of concept [cmajor] gain fx patch with [angular] gui built to a single web component.
 
 To test the patch simply run `npm install` and `npm run build`. Afterward drag the .cmajorpatch from
-the dist directory to the cmaj-plugin within your daw or play the patch via the cmaj comman line tool.
+the dist directory to the cmaj-plugin within your daw or play the patch via the cmaj command line tool.
 
 For development use `npm start` to rebuild the patch on change.
 
-Setup: Angular 15 with standalone components, experimental [esbuild], [angular-elements],
+Setup: Angular 16 with standalone components, experimental [esbuild], [angular-elements],
 jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v4.4 on Windows 10.
+Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v5 on Windows 10.
 
 #### Known issues / future improvements
 
