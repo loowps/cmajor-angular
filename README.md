@@ -11,7 +11,7 @@ For development use `npm start` to rebuild the patch on change.
 
 Setup: Angular 16 with standalone components, experimental [esbuild], [angular-elements],
 jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 0.9.2006 running the cmaj-plugin in Bitwig v5 on Windows 10.
+Tested with Cmajor Version: 0.9.2131 running the cmaj-plugin in Bitwig v5 on Windows 10.
 
 #### Known issues / future improvements
 
