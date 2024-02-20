@@ -20,11 +20,4 @@ describe('AppComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('getRouteAnimationData function', () => {
-    it('should ', () => {
-      const result = component.getRouteAnimationData();
-      expect(result).toEqual(undefined);
-    });
-  });
 });

@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@angular/animations':
-    specifier: 17.2.1
-    version: 17.2.1(@angular/core@17.2.1)
   '@angular/common':
     specifier: 17.2.1
     version: 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
@@ -25,7 +22,7 @@ dependencies:
     version: 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)(rxjs@7.8.1)
   '@angular/platform-browser':
     specifier: 17.2.1
-    version: 17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1)
+    version: 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)
   '@angular/platform-browser-dynamic':
     specifier: 17.2.1
     version: 17.2.1(@angular/common@17.2.1)(@angular/compiler@17.2.1)(@angular/core@17.2.1)(@angular/platform-browser@17.2.1)
@@ -455,15 +452,6 @@ packages:
       - supports-color
     dev: true
 
-  /@angular/animations@17.2.1(@angular/core@17.2.1):
-    resolution: {integrity: sha512-JCccG8EPM04OtN+Wayi79QnbkCYpKY69okWjEM7cPq8fbjIQE/ZAWxnzYMR/Xq3prwUtlH7LMyB5YdYCc6Ea1A==}
-    engines: {node: ^18.13.0 || >=20.9.0}
-    peerDependencies:
-      '@angular/core': 17.2.1
-    dependencies:
-      '@angular/core': 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
-      tslib: 2.6.2
-
   /@angular/cli@17.2.0:
     resolution: {integrity: sha512-JSfNQB76qrc8QNPLUvvqR10T4+WUrfz+ogmOliO+jAdhbpfZQ4tIt0WwUYvo+0foM8x7hTe3Wdhg8zWwteBnuw==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -572,7 +560,7 @@ packages:
     dependencies:
       '@angular/common': 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
       '@angular/core': 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
-      '@angular/platform-browser': 17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1)
+      '@angular/platform-browser': 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
@@ -589,10 +577,10 @@ packages:
       '@angular/common': 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
       '@angular/compiler': 17.2.1(@angular/core@17.2.1)
       '@angular/core': 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
-      '@angular/platform-browser': 17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1)
+      '@angular/platform-browser': 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)
       tslib: 2.6.2
 
-  /@angular/platform-browser@17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1):
+  /@angular/platform-browser@17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1):
     resolution: {integrity: sha512-on+fTZiDTBJmRQbQe6GOClqaUFe4GJdLS1EbmI+6/8Ntv4QW2PowWnaxajoqTj2Zrh22J9DSNy7RWcrQDdyU3g==}
     engines: {node: ^18.13.0 || >=20.9.0}
     peerDependencies:
@@ -603,7 +591,6 @@ packages:
       '@angular/animations':
         optional: true
     dependencies:
-      '@angular/animations': 17.2.1(@angular/core@17.2.1)
       '@angular/common': 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
       '@angular/core': 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
       tslib: 2.6.2
@@ -619,7 +606,7 @@ packages:
     dependencies:
       '@angular/common': 17.2.1(@angular/core@17.2.1)(rxjs@7.8.1)
       '@angular/core': 17.2.1(rxjs@7.8.1)(zone.js@0.14.4)
-      '@angular/platform-browser': 17.2.1(@angular/animations@17.2.1)(@angular/common@17.2.1)(@angular/core@17.2.1)
+      '@angular/platform-browser': 17.2.1(@angular/common@17.2.1)(@angular/core@17.2.1)
       rxjs: 7.8.1
       tslib: 2.6.2
     dev: false
@@ -6917,10 +6904,10 @@ packages:
       jest-environment-jsdom: 29.7.0
       jest-util: 29.7.0
       pretty-format: 29.7.0
-      ts-jest: 29.1.1(@babel/core@7.22.20)(esbuild@0.19.5)(jest@29.7.0)(typescript@5.2.2)
+      ts-jest: 29.1.1(@babel/core@7.22.20)(esbuild@0.20.0)(jest@29.7.0)(typescript@5.2.2)
       typescript: 5.2.2
     optionalDependencies:
-      esbuild: 0.19.5
+      esbuild: 0.20.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@jest/types'
@@ -6952,10 +6939,10 @@ packages:
       jest-environment-jsdom: 29.7.0
       jest-util: 29.7.0
       pretty-format: 29.7.0
-      ts-jest: 29.1.1(@babel/core@7.22.20)(esbuild@0.19.5)(jest@29.7.0)(typescript@5.2.2)
+      ts-jest: 29.1.1(@babel/core@7.22.20)(esbuild@0.20.0)(jest@29.7.0)(typescript@5.2.2)
       typescript: 5.2.2
     optionalDependencies:
-      esbuild: 0.19.5
+      esbuild: 0.20.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@jest/types'
@@ -9557,7 +9544,7 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /ts-jest@29.1.1(@babel/core@7.22.20)(esbuild@0.19.5)(jest@29.7.0)(typescript@5.2.2):
+  /ts-jest@29.1.1(@babel/core@7.22.20)(esbuild@0.20.0)(jest@29.7.0)(typescript@5.2.2):
     resolution: {integrity: sha512-D6xjnnbP17cC85nliwGiL+tpoKN0StpgE0TeOjXQTU6MVCfsB4v7aW05CgQ/1OywGb0x/oy9hHFnN+sczTiRaA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
@@ -9580,7 +9567,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.20
       bs-logger: 0.2.6
-      esbuild: 0.19.5
+      esbuild: 0.20.0
       fast-json-stable-stringify: 2.1.0
       jest: 29.7.0(@types/node@20.6.4)
       jest-util: 29.7.0

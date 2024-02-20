@@ -1,8 +1,7 @@
 import { createApplication } from '@angular/platform-browser';
 import { AppComponent } from 'src/app/app.component';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { appRoutes } from 'src/app/app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApplicationRef } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import 'zone.js';
@@ -10,7 +9,7 @@ import 'zone.js';
 const cmajViewElementTag = 'cmaj-view';
 
 createApplication({
-  providers: [provideAnimations(), provideRouter(appRoutes)],
+  providers: [provideRouter(appRoutes, withViewTransitions())],
 })
   .then((appRef: ApplicationRef) => {
     const ngElementConstructor = createCustomElement(AppComponent, {
