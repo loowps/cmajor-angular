@@ -10,7 +10,7 @@ the dist directory to the cmaj-plugin within your daw or play the patch via the 
 For development use `npm start` to rebuild the patch on change.
 
 Setup: Angular 17 and [angular-elements], jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 0.9.2233 running the cmaj-plugin in Bitwig v5.0.11 on Windows 10.
+Tested with Cmajor Version: 0.9.2311 running the cmaj-plugin in Bitwig v5.1.3 on Windows 10.
 
 #### Known issues / future improvements
 
