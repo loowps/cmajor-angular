@@ -6,11 +6,9 @@ export const appRoutes: Routes = [
   {
     path: '',
     component: ParameterViewComponent,
-    data: { animation: 'ParameterView' },
   },
   {
     path: 'about',
     component: AboutViewComponent,
-    data: { animation: 'AboutView' },
   },
 ];

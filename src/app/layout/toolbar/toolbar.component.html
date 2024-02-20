@@ -44,11 +44,7 @@
   </svg>
   <div>Cmajor + Angular</div>
 </a>
-<button
-  class="nav-button"
-  routerLinkActive=""
-  #rla="routerLinkActive"
-  [routerLink]="getRouterLink()"
->
-  {{ rla.isActive ? 'Back' : 'About' }}
+<button *ngIf="getRouterLink() === '/about'" class="nav-button" [routerLink]="'/about'">
+  About
 </button>
+<button *ngIf="getRouterLink() === ''" class="nav-button" [routerLink]="''">Back</button>
