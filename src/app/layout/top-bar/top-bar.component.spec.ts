@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ToolbarComponent } from 'src/app/layout/toolbar/toolbar.component';
+import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
 describe('ToolbarComponent', () => {
-  let component: ToolbarComponent;
-  let fixture: ComponentFixture<ToolbarComponent>;
+  let component: TopBarComponent;
+  let fixture: ComponentFixture<TopBarComponent>;
 
   let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ToolbarComponent, RouterTestingModule],
+      imports: [TopBarComponent, RouterTestingModule],
     }).compileComponents();
 
     router = TestBed.inject(Router);
-    fixture = TestBed.createComponent(ToolbarComponent);
+    fixture = TestBed.createComponent(TopBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

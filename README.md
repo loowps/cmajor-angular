@@ -10,12 +10,11 @@ the dist directory to the cmaj-plugin within your daw or play the patch via the 
 For development use `npm start` to rebuild the patch on change.
 
 Setup: Angular 17 and [angular-elements], jest, eslint, prettier, husky + lintstaged
-Tested with Cmajor Version: 1.0.2358 running the cmaj-plugin in Bitwig v5.1.3 on Windows 10.
+Tested with Cmajor Version: 1.0.2358 running the cmaj-plugin in Bitwig v5.1.9 on Windows 10.
 
 #### Known issues / future improvements
 
 - currently running the patch via the vscode extension does not seem to work
-- the pointer lock api causes a notification within the webview to use the ESC button
 - when loading a patch the default values don't seem to be reflected inside the host
 
 #### 🔊 [Spotify] / [Apple Music] / [Bandcamp] / [Soundcloud]

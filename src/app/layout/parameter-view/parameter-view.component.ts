@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KnobComponent } from 'src/app/components/knob/knob.component';
-import { Observable } from 'rxjs';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
+import { SliderComponent } from 'src/app/components/slider/slider.component';
 
 @Component({
   selector: 'cmaj-parameter-view',
   standalone: true,
-  imports: [CommonModule, KnobComponent],
+  imports: [CommonModule, SliderComponent],
   templateUrl: './parameter-view.component.html',
   styleUrls: ['./parameter-view.component.scss'],
 })
 export class ParameterViewComponent implements OnInit {
-  readonly $gain: Observable<undefined | number>;
+  readonly gain: Signal<number>;
 
   private readonly gainEndpoint = PatchConnectionEndpoint.Gain;
 
   constructor(private parameterService: ParameterService) {
-    this.$gain = parameterService.addParameter<undefined | number>(this.gainEndpoint);
+    this.gain = parameterService.addParameter<number>(this.gainEndpoint, 0);
   }
 
   ngOnInit(): void {

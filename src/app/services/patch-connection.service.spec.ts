@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
+import { PATCH_CONNECTION } from 'src/main';
 
 describe('PatchConnectionService', () => {
   let service: PatchConnectionService;
@@ -10,10 +11,11 @@ describe('PatchConnectionService', () => {
   const endpointId = PatchConnectionEndpoint.Gain;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection }],
+    });
     service = TestBed.inject(PatchConnectionService);
-
-    patchConnection = (window.parent as any).patchConnection as PatchConnection;
+    patchConnection = TestBed.inject(PATCH_CONNECTION);
   });
 
   it('should be created', () => {
