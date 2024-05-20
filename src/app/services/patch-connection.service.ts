@@ -1,6 +1,7 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
+import { PATCH_CONNECTION } from 'src/main';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +9,11 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
 export class PatchConnectionService {
   private readonly patchConnection?: PatchConnection;
 
-  constructor(private ngZone: NgZone) {
-    this.patchConnection = (window.parent as any).patchConnection;
+  constructor(
+    @Inject(PATCH_CONNECTION) private pC: PatchConnection,
+    private ngZone: NgZone,
+  ) {
+    this.patchConnection = pC;
   }
 
   requestEndpointValue(endpointId: PatchConnectionEndpoint): void {

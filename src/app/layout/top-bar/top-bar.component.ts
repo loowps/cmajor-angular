@@ -3,13 +3,13 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'cmaj-toolbar',
+  selector: 'cmaj-top-bar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, NgIf],
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss'],
+  templateUrl: './top-bar.component.html',
+  styleUrls: ['./top-bar.component.scss'],
 })
-export class ToolbarComponent {
+export class TopBarComponent {
   constructor(private router: Router) {}
 
   getRouterLink() {

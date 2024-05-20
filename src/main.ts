@@ -1,28 +1,35 @@
-import { createApplication } from '@angular/platform-browser';
-import { AppComponent } from 'src/app/app.component';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter, withHashLocation, withViewTransitions } from '@angular/router';
 import { appRoutes } from 'src/app/app.routes';
-import { ApplicationRef } from '@angular/core';
-import { createCustomElement } from '@angular/elements';
 import 'zone.js';
+import { PatchConnection } from 'src/app/services/patch-connection.model';
+import { AppComponent } from 'src/app/app.component';
+import { InjectionToken } from '@angular/core';
 
-const cmajViewElementTag = 'cmaj-view';
+const cmajViewElementTag = 'cmaj-app';
 
-createApplication({
-  providers: [provideRouter(appRoutes, withViewTransitions())],
-})
-  .then((appRef: ApplicationRef) => {
-    const ngElementConstructor = createCustomElement(AppComponent, {
-      injector: appRef.injector,
-    });
-    if (!customElements.get(cmajViewElementTag)) {
-      customElements.define(cmajViewElementTag, ngElementConstructor);
-    }
-  })
-  .catch(err => console.error(err));
+export const PATCH_CONNECTION = new InjectionToken<PatchConnection>('patchConnection');
 
-export default function createCustomPatchView(patchConnection: any) {
-  const cmajView = document.createElement(cmajViewElementTag);
-  window['patchConnection' as any] = patchConnection;
-  return cmajView;
+class CmajApp extends HTMLElement {
+  private patchConnection?: PatchConnection;
+
+  constructor(patchConnection: PatchConnection) {
+    super();
+    this.patchConnection = patchConnection;
+  }
+
+  connectedCallback() {
+    bootstrapApplication(AppComponent, {
+      providers: [
+        { provide: PATCH_CONNECTION, useValue: this.patchConnection },
+        provideRouter(appRoutes, withViewTransitions(), withHashLocation()),
+      ],
+    }).catch(err => console.error(err));
+  }
+}
+
+window.customElements.define(cmajViewElementTag, CmajApp);
+
+export default function createPatchView(patchConnection: PatchConnection) {
+  return new CmajApp(patchConnection);
 }

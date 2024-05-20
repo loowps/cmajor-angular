@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ParameterService } from 'src/app/services/parameter.service';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
+import { PATCH_CONNECTION } from 'src/main';
 
 describe('ParameterService', () => {
   let service: ParameterService;
@@ -10,7 +11,9 @@ describe('ParameterService', () => {
   const endpointId = 'xyz' as PatchConnectionEndpoint;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection }],
+    });
     patchConnectionService = TestBed.inject(PatchConnectionService);
 
     service = TestBed.inject(ParameterService);
@@ -21,7 +24,7 @@ describe('ParameterService', () => {
   });
 
   describe('param lifecycle: addParameter and sendParameterValue function', () => {
-    it('should add a new param once that can be updated', done => {
+    it('should add a new param once that can be updated', () => {
       const newValue = 123;
       const sentValue = 456;
       const sendParameterValue = jest
@@ -32,8 +35,7 @@ describe('ParameterService', () => {
         .spyOn(patchConnectionService, 'addParameterListener')
         .mockImplementation();
 
-      const paramObservable = service.addParameter(endpointId);
-      service.addParameter(endpointId);
+      const addedParameter = service.addParameter(endpointId, 0);
 
       expect(addParameterListener).toHaveBeenCalledTimes(1);
       expect(addParameterListener).toHaveBeenCalledWith(endpointId, expect.any(Function));
@@ -43,13 +45,9 @@ describe('ParameterService', () => {
       service.sendParameterValue({ endpointID: endpointId, value: newValue });
       service.sendParameterValue({ endpointID: endpointId, value: sentValue });
 
-      paramObservable.subscribe(value => {
-        expect(sendParameterValue).toHaveBeenCalledTimes(1);
-        expect(sendParameterValue).toHaveBeenCalledWith(endpointId, sentValue);
-
-        expect(value).toEqual(newValue);
-        done();
-      });
+      expect(sendParameterValue).toHaveBeenCalledTimes(1);
+      expect(sendParameterValue).toHaveBeenCalledWith(endpointId, sentValue);
+      expect(addedParameter()).toEqual(newValue);
     });
   });
 

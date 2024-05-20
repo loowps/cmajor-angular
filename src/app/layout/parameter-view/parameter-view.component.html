@@ -1,9 +1,9 @@
-<cmaj-knob
+<cmaj-slider
   label="Gain"
-  [value]="($gain | async) || 0"
+  [value]="gain()"
   (valueChange)="handleGainValueChange($event)"
   (resetEvent)="handleGainValueChange(0)"
   (beginChange)="handleBeginGainValueChange()"
   (endChange)="handleEndGainValueChange()"
 >
-</cmaj-knob>
+</cmaj-slider>

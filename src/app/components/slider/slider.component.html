@@ -1,0 +1,20 @@
+<div class="slider-wrapper">
+  <label for="slider">{{ label() }}</label>
+  <input
+    id="slider"
+    class="slider"
+    [ngStyle]="{
+      background:
+        'linear-gradient(to right, #6db6eb ' + value() * 100 + '%, #ccc ' + value() * 100 + '%)'
+    }"
+    type="range"
+    [step]="stepSize()"
+    [min]="minValue()"
+    [max]="maxValue()"
+    [value]="value()"
+    (input)="onChange($event)"
+    (mousedown)="onMouseDown($event)"
+    (mouseup)="onMouseUp()"
+    (dblclick)="onDoubleClick()"
+  />
+</div>
