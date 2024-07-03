@@ -6,7 +6,10 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
   providedIn: 'root',
 })
 export class ParameterService {
-  private readonly parameters: Map<PatchConnectionEndpoint, WritableSignal<any>> = new Map();
+  private readonly parameters: Map<PatchConnectionEndpoint, WritableSignal<any>> = new Map<
+    PatchConnectionEndpoint,
+    WritableSignal<any>
+  >();
 
   constructor(private patchConnectionService: PatchConnectionService) {}
 
