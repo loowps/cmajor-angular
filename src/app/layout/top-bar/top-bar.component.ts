@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'cmaj-top-bar',
-  standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, NgIf],
+  imports: [CommonModule, RouterLink, NgIf],
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.scss'],
 })

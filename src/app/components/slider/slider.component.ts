@@ -3,7 +3,6 @@ import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'cmaj-slider',
-  standalone: true,
   imports: [NgStyle],
   templateUrl: './slider.component.html',
   styleUrl: './slider.component.scss',

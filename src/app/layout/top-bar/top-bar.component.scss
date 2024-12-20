@@ -22,10 +22,6 @@
 }
 
 .nav-button {
-  @media screen and (min-width: 265px) {
-    margin-left: auto;
-  }
-
   background-color: transparent;
   border-radius: 2px;
   padding: 6px;
@@ -37,6 +33,10 @@
     background-color,
     color 75ms ease;
   min-width: 64px;
+
+  @media screen and (min-width: 265px) {
+    margin-left: auto;
+  }
 
   &:active {
     background-color: #3e679d !important;
