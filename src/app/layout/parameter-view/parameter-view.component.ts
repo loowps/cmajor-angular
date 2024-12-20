@@ -6,7 +6,6 @@ import { SliderComponent } from 'src/app/components/slider/slider.component';
 
 @Component({
   selector: 'cmaj-parameter-view',
-  standalone: true,
   imports: [CommonModule, SliderComponent],
   templateUrl: './parameter-view.component.html',
   styleUrls: ['./parameter-view.component.scss'],

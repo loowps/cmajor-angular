@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
-import { ParameterViewComponent } from 'src/app/layout/parameter-view/parameter-view.component';
 import { Router, RouterOutlet } from '@angular/router';
 import * as packageJson from 'package.json';
 
@@ -8,8 +7,7 @@ import * as packageJson from 'package.json';
   selector: 'cmaj-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [TopBarComponent, ParameterViewComponent, RouterOutlet],
+  imports: [TopBarComponent, RouterOutlet],
 })
 export class AppComponent implements OnInit {
   readonly version = packageJson.version;
