@@ -44,7 +44,9 @@
   </svg>
   <div>Cmajor + Angular</div>
 </a>
-<button *ngIf="getRouterLink() === '/about'" class="nav-button" [routerLink]="'/about'">
-  About
-</button>
-<button *ngIf="getRouterLink() === ''" class="nav-button" [routerLink]="''">Back</button>
+@if (getRouterLink() === '/about') {
+  <button class="nav-button" [routerLink]="'/about'">About</button>
+}
+@if (getRouterLink() === '') {
+  <button class="nav-button" [routerLink]="''">Back</button>
+}

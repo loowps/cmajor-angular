@@ -1,12 +1,12 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
 import { SliderComponent } from 'src/app/components/slider/slider.component';
 
 @Component({
   selector: 'cmaj-parameter-view',
-  imports: [CommonModule, SliderComponent],
+  imports: [SliderComponent],
   templateUrl: './parameter-view.component.html',
   styleUrls: ['./parameter-view.component.scss'],
 })
