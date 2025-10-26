@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import * as packageJson from 'package.json';
@@ -10,9 +10,9 @@ import * as packageJson from 'package.json';
   imports: [TopBarComponent, RouterOutlet],
 })
 export class AppComponent implements OnInit {
-  readonly version = packageJson.version;
+  private router = inject(Router);
 
-  constructor(private router: Router) {}
+  readonly version = packageJson.version;
 
   ngOnInit(): void {
     this.router.initialNavigation();

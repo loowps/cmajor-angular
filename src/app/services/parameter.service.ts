@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, Signal, WritableSignal, inject } from '@angular/core';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 
@@ -6,12 +6,12 @@ import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpo
   providedIn: 'root',
 })
 export class ParameterService {
+  private patchConnectionService = inject(PatchConnectionService);
+
   private readonly parameters: Map<PatchConnectionEndpoint, WritableSignal<any>> = new Map<
     PatchConnectionEndpoint,
     WritableSignal<any>
   >();
-
-  constructor(private patchConnectionService: PatchConnectionService) {}
 
   addParameter<T>(endpointId: PatchConnectionEndpoint, defaultValue: T): Signal<T> {
     let parameter = this.parameters.get(endpointId);

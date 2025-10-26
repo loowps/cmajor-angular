@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, OnInit, Signal, inject } from '@angular/core';
 
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
@@ -11,11 +11,15 @@ import { SliderComponent } from 'src/app/components/slider/slider.component';
   styleUrls: ['./parameter-view.component.scss'],
 })
 export class ParameterViewComponent implements OnInit {
+  private parameterService = inject(ParameterService);
+
   readonly gain: Signal<number>;
 
   private readonly gainEndpoint = PatchConnectionEndpoint.Gain;
 
-  constructor(private parameterService: ParameterService) {
+  constructor() {
+    const parameterService = this.parameterService;
+
     this.gain = parameterService.addParameter<number>(this.gainEndpoint, 0);
   }
 
