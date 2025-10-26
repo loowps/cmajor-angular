@@ -1,4 +1,4 @@
-import { Injectable, NgZone, inject } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PATCH_CONNECTION } from 'src/main';
@@ -7,38 +7,30 @@ import { PATCH_CONNECTION } from 'src/main';
   providedIn: 'root',
 })
 export class PatchConnectionService {
-  private pC = inject<PatchConnection>(PATCH_CONNECTION);
+  private patchConnection: PatchConnection = inject<PatchConnection>(PATCH_CONNECTION);
   private ngZone = inject(NgZone);
-
-  private readonly patchConnection?: PatchConnection;
-
-  constructor() {
-    const pC = this.pC;
-
-    this.patchConnection = pC;
-  }
 
   requestEndpointValue(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection?.requestParameterValue(endpointId);
+      this.patchConnection.requestParameterValue(endpointId);
     });
   }
 
   sendParameterGestureStart(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection?.sendParameterGestureStart(endpointId);
+      this.patchConnection.sendParameterGestureStart(endpointId);
     });
   }
 
   sendParameterValue(endpointId: PatchConnectionEndpoint, newValue: any) {
     this.ngZone.run(() => {
-      this.patchConnection?.sendEventOrValue(endpointId, newValue);
+      this.patchConnection.sendEventOrValue(endpointId, newValue);
     });
   }
 
   sendParameterGestureEnd(endpointId: PatchConnectionEndpoint): void {
     this.ngZone.run(() => {
-      this.patchConnection?.sendParameterGestureEnd(endpointId);
+      this.patchConnection.sendParameterGestureEnd(endpointId);
     });
   }
 
@@ -46,6 +38,6 @@ export class PatchConnectionService {
     const onChange = (newValue: any) => {
       this.ngZone.run(() => callback(newValue));
     };
-    this.patchConnection?.addParameterListener(endpointId, onChange);
+    this.patchConnection.addParameterListener(endpointId, onChange);
   }
 }
