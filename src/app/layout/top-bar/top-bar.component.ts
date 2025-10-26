@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent {
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
   getRouterLink() {
     return this.router.url === '/about' ? '' : '/about';

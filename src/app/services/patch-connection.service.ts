@@ -1,4 +1,4 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PATCH_CONNECTION } from 'src/main';
@@ -7,12 +7,14 @@ import { PATCH_CONNECTION } from 'src/main';
   providedIn: 'root',
 })
 export class PatchConnectionService {
+  private pC = inject<PatchConnection>(PATCH_CONNECTION);
+  private ngZone = inject(NgZone);
+
   private readonly patchConnection?: PatchConnection;
 
-  constructor(
-    @Inject(PATCH_CONNECTION) private pC: PatchConnection,
-    private ngZone: NgZone,
-  ) {
+  constructor() {
+    const pC = this.pC;
+
     this.patchConnection = pC;
   }
 
