@@ -78,12 +78,9 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
-            "assets": ["src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "runnerConfig": true
           }
         },
         "lint": {

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AboutViewComponent } from 'src/app/layout/about-view/about-view.component';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('AboutComponent', () => {
   let component: AboutViewComponent;

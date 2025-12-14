@@ -3,16 +3,17 @@ import { ParameterViewComponent } from 'src/app/layout/parameter-view/parameter-
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
 import { PATCH_CONNECTION } from 'src/main';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ParameterViewComponent', () => {
   let component: ParameterViewComponent;
   let fixture: ComponentFixture<ParameterViewComponent>;
 
   let parameterService: ParameterService;
-  let requestParameterValue: jest.SpyInstance;
-  let sendParameterGestureStart: jest.SpyInstance;
-  let sendParameterGestureEnd: jest.SpyInstance;
-  let sendParameterValue: jest.SpyInstance;
+  let requestParameterValue: any;
+  let sendParameterGestureStart: any;
+  let sendParameterGestureEnd: any;
+  let sendParameterValue: any;
 
   const gainEndpointId = PatchConnectionEndpoint.Gain;
 
@@ -24,19 +25,21 @@ describe('ParameterViewComponent', () => {
 
     parameterService = TestBed.inject(ParameterService);
 
-    requestParameterValue = jest
+    requestParameterValue = vi
       .spyOn(parameterService, 'requestParameterValue')
-      .mockImplementation();
+      .mockImplementation(() => {});
 
-    sendParameterGestureStart = jest
+    sendParameterGestureStart = vi
       .spyOn(parameterService, 'sendParameterGestureStart')
-      .mockImplementation();
+      .mockImplementation(() => {});
 
-    sendParameterGestureEnd = jest
+    sendParameterGestureEnd = vi
       .spyOn(parameterService, 'sendParameterGestureEnd')
-      .mockImplementation();
+      .mockImplementation(() => {});
 
-    sendParameterValue = jest.spyOn(parameterService, 'sendParameterValue').mockImplementation();
+    sendParameterValue = vi
+      .spyOn(parameterService, 'sendParameterValue')
+      .mockImplementation(() => {});
 
     fixture = TestBed.createComponent(ParameterViewComponent);
     component = fixture.componentInstance;

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ToolbarComponent', () => {
   let component: TopBarComponent;
@@ -11,7 +11,8 @@ describe('ToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopBarComponent, RouterTestingModule],
+      imports: [TopBarComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     router = TestBed.inject(Router);
@@ -29,7 +30,7 @@ describe('ToolbarComponent', () => {
       ['/about', ''],
       ['', '/about'],
     ])("'%s' should return '%s'", (urlSegment, expected) => {
-      Object.defineProperty(router, 'url', { value: urlSegment });
+      vi.spyOn(router, 'url', 'get').mockReturnValue(urlSegment);
 
       const result = component.getRouterLink();
       expect(result).toEqual(expected);

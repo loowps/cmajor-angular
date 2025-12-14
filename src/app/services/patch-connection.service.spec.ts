@@ -3,6 +3,7 @@ import { PatchConnectionService } from 'src/app/services/patch-connection.servic
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PATCH_CONNECTION } from 'src/main';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 
 describe('PatchConnectionService', () => {
   let service: PatchConnectionService;
@@ -52,7 +53,7 @@ describe('PatchConnectionService', () => {
   describe('addParameterListener function', () => {
     it('should call addParameterListener and execute callback with new value ', () => {
       const newValue = 123;
-      const callback = jest.fn();
+      const callback = vi.fn();
 
       service.addParameterListener(endpointId, callback);
 
@@ -62,7 +63,7 @@ describe('PatchConnectionService', () => {
         expect.any(Function),
       );
 
-      (patchConnection.addParameterListener as jest.Mock).mock.calls[0][1](newValue);
+      (patchConnection.addParameterListener as Mock).mock.calls[0][1](newValue);
 
       expect(callback).toHaveBeenCalledTimes(1);
       expect(callback).toHaveBeenCalledWith(newValue);
