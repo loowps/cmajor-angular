@@ -67,7 +67,7 @@ importers:
         specifier: ^9.38.0
         version: 9.38.0(jiti@1.21.7)
       eslint-config-prettier:
-        specifier: ^10.1.8
+        specifier: 10.1.8
         version: 10.1.8(eslint@9.38.0(jiti@1.21.7))
       husky:
         specifier: ^9.1.7
