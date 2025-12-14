@@ -3,6 +3,7 @@ import { ParameterService } from 'src/app/services/parameter.service';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PATCH_CONNECTION } from 'src/main';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ParameterService', () => {
   let service: ParameterService;
@@ -27,13 +28,13 @@ describe('ParameterService', () => {
     it('should add a new param once that can be updated', () => {
       const newValue = 123;
       const sentValue = 456;
-      const sendParameterValue = jest
+      const sendParameterValue = vi
         .spyOn(patchConnectionService, 'sendParameterValue')
-        .mockImplementation();
+        .mockImplementation(() => {});
 
-      const addParameterListener = jest
+      const addParameterListener = vi
         .spyOn(patchConnectionService, 'addParameterListener')
-        .mockImplementation();
+        .mockImplementation(() => {});
 
       const addedParameter = service.addParameter(endpointId, 0);
 
@@ -53,9 +54,9 @@ describe('ParameterService', () => {
 
   describe('requestParameterValue function', () => {
     it('should call requestEndpointValue of patchConnectionService', () => {
-      const requestEndpointValue = jest
+      const requestEndpointValue = vi
         .spyOn(patchConnectionService, 'requestEndpointValue')
-        .mockImplementation();
+        .mockImplementation(() => {});
 
       service.requestParameterValue(endpointId);
 
@@ -66,9 +67,9 @@ describe('ParameterService', () => {
 
   describe('sendParameterGestureStart function', () => {
     it('should call sendParameterGestureStart of patchConnectionService', () => {
-      const sendParameterGestureStart = jest
+      const sendParameterGestureStart = vi
         .spyOn(patchConnectionService, 'sendParameterGestureStart')
-        .mockImplementation();
+        .mockImplementation(() => {});
 
       service.sendParameterGestureStart(endpointId);
 
@@ -79,9 +80,9 @@ describe('ParameterService', () => {
 
   describe('sendParameterGestureEnd function', () => {
     it('should call sendParameterGestureEnd of patchConnectionService', () => {
-      const sendParameterGestureEnd = jest
+      const sendParameterGestureEnd = vi
         .spyOn(patchConnectionService, 'sendParameterGestureEnd')
-        .mockImplementation();
+        .mockImplementation(() => {});
 
       service.sendParameterGestureEnd(endpointId);
 

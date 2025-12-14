@@ -4,7 +4,7 @@ import { appRoutes } from 'src/app/app.routes';
 import 'zone.js';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { AppComponent } from 'src/app/app.component';
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, provideZoneChangeDetection } from '@angular/core';
 
 const cmajViewElementTag = 'cmaj-app';
 
@@ -21,6 +21,7 @@ class CmajApp extends HTMLElement {
   connectedCallback() {
     bootstrapApplication(AppComponent, {
       providers: [
+        provideZoneChangeDetection(),
         { provide: PATCH_CONNECTION, useValue: this.patchConnection },
         provideRouter(appRoutes, withViewTransitions(), withHashLocation()),
       ],
