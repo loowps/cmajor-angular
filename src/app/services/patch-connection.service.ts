@@ -1,4 +1,4 @@
-import { inject, Injectable, NgZone } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PatchConnection } from 'src/app/services/patch-connection.model';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PATCH_CONNECTION } from 'src/main';
@@ -8,35 +8,26 @@ import { PATCH_CONNECTION } from 'src/main';
 })
 export class PatchConnectionService {
   private patchConnection: PatchConnection = inject<PatchConnection>(PATCH_CONNECTION);
-  private ngZone = inject(NgZone);
 
   requestEndpointValue(endpointId: PatchConnectionEndpoint): void {
-    this.ngZone.run(() => {
-      this.patchConnection.requestParameterValue(endpointId);
-    });
+    this.patchConnection.requestParameterValue(endpointId);
   }
 
   sendParameterGestureStart(endpointId: PatchConnectionEndpoint): void {
-    this.ngZone.run(() => {
-      this.patchConnection.sendParameterGestureStart(endpointId);
-    });
+    this.patchConnection.sendParameterGestureStart(endpointId);
   }
 
   sendParameterValue(endpointId: PatchConnectionEndpoint, newValue: any) {
-    this.ngZone.run(() => {
-      this.patchConnection.sendEventOrValue(endpointId, newValue);
-    });
+    this.patchConnection.sendEventOrValue(endpointId, newValue);
   }
 
   sendParameterGestureEnd(endpointId: PatchConnectionEndpoint): void {
-    this.ngZone.run(() => {
-      this.patchConnection.sendParameterGestureEnd(endpointId);
-    });
+    this.patchConnection.sendParameterGestureEnd(endpointId);
   }
 
   addParameterListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void) {
     const onChange = (newValue: any) => {
-      this.ngZone.run(() => callback(newValue));
+      callback(newValue);
     };
     this.patchConnection.addParameterListener(endpointId, onChange);
   }
