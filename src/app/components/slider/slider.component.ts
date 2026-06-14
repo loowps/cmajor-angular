@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'cmaj-slider',
   imports: [NgStyle],
   templateUrl: './slider.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './slider.component.scss',
 })
 export class SliderComponent {
