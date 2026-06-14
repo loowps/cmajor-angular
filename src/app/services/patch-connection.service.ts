@@ -25,11 +25,15 @@ export class PatchConnectionService {
     this.patchConnection.sendParameterGestureEnd(endpointId);
   }
 
-  addParameterListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void) {
-    const onChange = (newValue: any) => {
-      callback(newValue);
-    };
-    this.patchConnection.addParameterListener(endpointId, onChange);
+  addParameterListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void): void {
+    this.patchConnection.addParameterListener(endpointId, callback);
+  }
+
+  removeParameterListener(
+    endpointId: PatchConnectionEndpoint,
+    callback: (value: any) => void,
+  ): void {
+    this.patchConnection.removeParameterListener(endpointId, callback);
   }
 
   addEndpointListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void): void {

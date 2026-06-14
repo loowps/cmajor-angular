@@ -1,35 +1,39 @@
-import { Injectable, signal, Signal, WritableSignal, inject } from '@angular/core';
+import { Injectable, OnDestroy, Signal, WritableSignal, inject, signal } from '@angular/core';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ParameterService {
+export class ParameterService implements OnDestroy {
   private patchConnectionService = inject(PatchConnectionService);
 
-  private readonly parameters: Map<PatchConnectionEndpoint, WritableSignal<any>> = new Map<
-    PatchConnectionEndpoint,
-    WritableSignal<any>
-  >();
+  private readonly parameters = new Map<PatchConnectionEndpoint, WritableSignal<any>>();
+  private readonly callbacks = new Map<PatchConnectionEndpoint, (value: any) => void>();
 
   addParameter<T>(endpointId: PatchConnectionEndpoint, defaultValue: T): Signal<T> {
     let parameter = this.parameters.get(endpointId);
     if (!parameter) {
-      parameter = signal<undefined | T>(defaultValue);
+      parameter = signal<T>(defaultValue);
       this.parameters.set(endpointId, parameter);
 
-      const callback = (value: T) => parameter?.set(value);
+      const callback = (value: T) => parameter!.set(value);
+      this.callbacks.set(endpointId, callback);
       this.patchConnectionService.addParameterListener(endpointId, callback);
     }
     return parameter.asReadonly();
   }
 
-  sendParameterValue(args: { endpointID: PatchConnectionEndpoint; value: any }) {
-    const { endpointID: endpointId, value: newValue } = args;
-    const paramToUpdate = this.parameters.get(endpointId);
+  ngOnDestroy(): void {
+    this.callbacks.forEach((callback, endpointId) => {
+      this.patchConnectionService.removeParameterListener(endpointId, callback);
+    });
+  }
 
-    if (paramToUpdate != null && paramToUpdate() !== newValue) {
+  sendParameterValue(args: { endpointID: PatchConnectionEndpoint; value: any }): void {
+    const { endpointID: endpointId, value: newValue } = args;
+    const parameter = this.parameters.get(endpointId);
+    if (parameter != null && parameter() !== newValue) {
       this.patchConnectionService.sendParameterValue(endpointId, newValue);
     }
   }
