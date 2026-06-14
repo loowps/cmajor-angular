@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
 
@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'cmaj-top-bar',
   imports: [RouterLink],
   templateUrl: './top-bar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent {

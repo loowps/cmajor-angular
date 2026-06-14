@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, inject } from '@angular/core';
+import { Component, OnInit, Signal, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
@@ -8,6 +8,7 @@ import { SliderComponent } from 'src/app/components/slider/slider.component';
   selector: 'cmaj-parameter-view',
   imports: [SliderComponent],
   templateUrl: './parameter-view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./parameter-view.component.scss'],
 })
 export class ParameterViewComponent implements OnInit {

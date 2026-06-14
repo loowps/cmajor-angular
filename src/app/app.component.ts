@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import * as packageJson from 'package.json';
@@ -7,6 +7,7 @@ import * as packageJson from 'package.json';
   selector: 'cmaj-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [TopBarComponent, RouterOutlet],
 })
 export class AppComponent implements OnInit {
