@@ -1,0 +1,7 @@
+engineStrict: true
+strictDepBuilds: true
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true

@@ -1,6 +1,6 @@
 {
   "name": "cmajor-angular",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "scripts": {
     "ng": "ng",
     "start": "pnpm run dev",
@@ -17,45 +17,36 @@
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@11.6.0",
   "private": true,
   "dependencies": {
-    "@angular/common": "^21.2.4",
-    "@angular/compiler": "^21.2.4",
-    "@angular/core": "^21.2.4",
-    "@angular/elements": "^21.2.4",
-    "@angular/forms": "^21.2.4",
-    "@angular/platform-browser": "^21.2.4",
-    "@angular/platform-browser-dynamic": "^21.2.4",
-    "@angular/router": "^21.2.4",
+    "@angular/common": "^21.2.17",
+    "@angular/compiler": "^21.2.17",
+    "@angular/core": "^21.2.17",
+    "@angular/elements": "^21.2.17",
+    "@angular/forms": "^21.2.17",
+    "@angular/platform-browser": "^21.2.17",
+    "@angular/platform-browser-dynamic": "^21.2.17",
+    "@angular/router": "^21.2.17",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@angular/build": "^21.2.2",
-    "@angular/cli": "^21.2.2",
-    "@angular/compiler-cli": "^21.2.4",
-    "@eslint/js": "^9.39.4",
-    "@vitest/coverage-v8": "^4.1.0",
-    "angular-eslint": "^21.3.0",
-    "baseline-browser-mapping": "^2.10.8",
-    "eslint": "^9.39.4",
-    "eslint-config-prettier": "^9.1.2",
+    "@angular/build": "^21.2.15",
+    "@angular/cli": "^21.2.15",
+    "@angular/compiler-cli": "^21.2.17",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^4.1.8",
+    "angular-eslint": "^21.4.0",
+    "baseline-browser-mapping": "^2.10.37",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
-    "jsdom": "^27.4.0",
-    "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1",
-    "typescript": "~5.9.3",
-    "typescript-eslint": "^8.57.0",
-    "vitest": "^4.1.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "msgpackr-extract",
-      "lmdb",
-      "unrs-resolver"
-    ]
+    "jsdom": "^29.1.1",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.4",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
   }
 }
