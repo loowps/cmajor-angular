@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 
@@ -12,6 +13,7 @@ describe('TopBarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TopBarComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideRouter([
           { path: '', component: TopBarComponent },
           { path: 'about', component: TopBarComponent },
@@ -21,23 +23,25 @@ describe('TopBarComponent', () => {
 
     router = TestBed.inject(Router);
     fixture = TestBed.createComponent(TopBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
+    component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 
   describe('isAbout', () => {
     it('should be false on home route', async () => {
       await router.navigate(['/']);
-      expect(component.isAbout()).toBe(false);
+      await fixture.whenStable();
+      expect(fixture.componentInstance.isAbout()).toBe(false);
     });
 
     it('should be true on /about route', async () => {
       await router.navigate(['/about']);
-      expect(component.isAbout()).toBe(true);
+      await fixture.whenStable();
+      expect(fixture.componentInstance.isAbout()).toBe(true);
     });
   });
 });
