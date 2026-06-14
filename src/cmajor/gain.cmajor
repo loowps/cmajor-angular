@@ -3,25 +3,56 @@ graph Gain   [[ main ]]
     input stream float<2> in;
     output stream float<2> out;
 
+    output event float<2> levelOut;
+
     input event float32 gainParam  [[ name: "Gain", min: 0, max: 1, init:  0, step: 0.01 ]];
 
     node gainToDb = GainToDb;
     node gain = std::levels::SmoothedGain (float<2>, 0.02f);
+    node meter = LevelMeter;
 
     connection {
         in -> gain.in;
         gainParam -> gainToDb.gain;
         gainToDb.volume -> gain.volume;
         gain.out -> out;
+        gain.out -> meter.in;
+        meter.levelOut -> levelOut;
     }
 }
 
-processor GainToDb 
+processor GainToDb
 {
     input event float32 gain;
     output event float32 volume;
 
     event gain(float32 f) {
         volume <- std::levels::gainTodB (f);
+    }
+}
+
+processor LevelMeter
+{
+    input stream float<2> in;
+    output event float<2> levelOut;
+
+    let updateRateHz = 45.0;
+
+    void main()
+    {
+        let framesPerUpdate = max (1, int (processor.frequency / updateRateHz));
+
+        loop
+        {
+            float<2> peak;
+
+            loop (framesPerUpdate)
+            {
+                peak = max (peak, abs (in));
+                advance();
+            }
+
+            levelOut <- peak;
+        }
     }
 }

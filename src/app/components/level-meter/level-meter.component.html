@@ -1,0 +1,14 @@
+<div class="meters" (click)="clearAllClips()">
+  @for (channel of channels(); track $index) {
+    <div class="meter">
+      <span class="label">{{ labels()[$index] }}</span>
+      <div class="track">
+        <div class="unlit" [style.width]="unlitWidth(channel.display)"></div>
+        @if (channel.peak > 0) {
+          <div class="peak" [style.left]="peakLeft(channel.peak)"></div>
+        }
+        <div class="clip-indicator" [class.active]="channel.clipped"></div>
+      </div>
+    </div>
+  }
+</div>

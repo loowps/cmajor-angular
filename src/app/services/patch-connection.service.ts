@@ -31,4 +31,15 @@ export class PatchConnectionService {
     };
     this.patchConnection.addParameterListener(endpointId, onChange);
   }
+
+  addEndpointListener(endpointId: PatchConnectionEndpoint, callback: (value: any) => void): void {
+    this.patchConnection.addEndpointListener(endpointId, callback);
+  }
+
+  removeEndpointListener(
+    endpointId: PatchConnectionEndpoint,
+    callback: (value: any) => void,
+  ): void {
+    this.patchConnection.removeEndpointListener(endpointId, callback);
+  }
 }
