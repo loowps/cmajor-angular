@@ -44,9 +44,6 @@
   </svg>
   <div>Cmajor + Angular</div>
 </a>
-@if (getRouterLink() === '/about') {
-  <button class="nav-button" [routerLink]="'/about'">About</button>
-}
-@if (getRouterLink() === '') {
-  <button class="nav-button" [routerLink]="''">Back</button>
-}
+<button class="nav-button" [routerLink]="isAbout() ? '/' : '/about'">
+  {{ isAbout() ? 'Home' : 'About' }}
+</button>

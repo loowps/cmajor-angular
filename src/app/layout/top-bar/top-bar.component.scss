@@ -22,28 +22,26 @@
 }
 
 .nav-button {
-  background-color: transparent;
-  border-radius: 2px;
-  padding: 6px;
-  border: 0 none;
-  color: #f8f8f8;
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
   cursor: pointer;
-  font-weight: bold;
   transition:
-    background-color,
-    color 75ms ease;
-  min-width: 64px;
+    background-color 100ms ease,
+    border-color 100ms ease;
 
-  @media screen and (min-width: 265px) {
-    margin-left: auto;
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.35);
   }
 
   &:active {
-    background-color: #3e679d !important;
-    color: #dcdcdc;
-  }
-
-  &:hover:not(:active) {
-    background-color: #5481c2;
+    background: rgba(255, 255, 255, 0.14);
   }
 }
