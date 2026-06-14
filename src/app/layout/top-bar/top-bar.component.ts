@@ -1,6 +1,7 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-
-import { Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { filter, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'cmaj-top-bar',
@@ -12,7 +13,13 @@ import { Router, RouterLink } from '@angular/router';
 export class TopBarComponent {
   private router = inject(Router);
 
-  getRouterLink() {
-    return this.router.url === '/about' ? '' : '/about';
-  }
+  private readonly url = toSignal(
+    this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      map(() => this.router.url),
+      startWith(this.router.url),
+    ),
+  );
+
+  readonly isAbout = computed(() => this.url() === '/about');
 }

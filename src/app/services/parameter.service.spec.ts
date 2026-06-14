@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ParameterService } from 'src/app/services/parameter.service';
 import { PatchConnectionService } from 'src/app/services/patch-connection.service';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { PATCH_CONNECTION } from 'src/main';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ParameterService', () => {
   let service: ParameterService;
@@ -13,10 +14,12 @@ describe('ParameterService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection }],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection },
+      ],
     });
     patchConnectionService = TestBed.inject(PatchConnectionService);
-
     service = TestBed.inject(ParameterService);
   });
 

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ParameterViewComponent } from 'src/app/layout/parameter-view/parameter-view.component';
 import { PatchConnectionEndpoint } from 'src/app/services/patch-connection-endpoints.enum';
 import { ParameterService } from 'src/app/services/parameter.service';
 import { PATCH_CONNECTION } from 'src/main';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ParameterViewComponent', () => {
   let component: ParameterViewComponent;
@@ -20,7 +21,10 @@ describe('ParameterViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ParameterViewComponent],
-      providers: [{ provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection }],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: PATCH_CONNECTION, useValue: (window.parent as any).patchConnection },
+      ],
     }).compileComponents();
 
     parameterService = TestBed.inject(ParameterService);
@@ -43,7 +47,7 @@ describe('ParameterViewComponent', () => {
 
     fixture = TestBed.createComponent(ParameterViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

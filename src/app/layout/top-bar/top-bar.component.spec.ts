@@ -1,39 +1,47 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 import { provideRouter, Router } from '@angular/router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { TopBarComponent } from 'src/app/layout/top-bar/top-bar.component';
 
-describe('ToolbarComponent', () => {
+describe('TopBarComponent', () => {
   let component: TopBarComponent;
   let fixture: ComponentFixture<TopBarComponent>;
-
   let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TopBarComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideRouter([
+          { path: '', component: TopBarComponent },
+          { path: 'about', component: TopBarComponent },
+        ]),
+      ],
     }).compileComponents();
 
     router = TestBed.inject(Router);
     fixture = TestBed.createComponent(TopBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
+    component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 
-  describe('getRouterLink function', () => {
-    it.each([
-      ['/about', ''],
-      ['', '/about'],
-    ])("'%s' should return '%s'", (urlSegment, expected) => {
-      vi.spyOn(router, 'url', 'get').mockReturnValue(urlSegment);
+  describe('isAbout', () => {
+    it('should be false on home route', async () => {
+      await router.navigate(['/']);
+      await fixture.whenStable();
+      expect(fixture.componentInstance.isAbout()).toBe(false);
+    });
 
-      const result = component.getRouterLink();
-      expect(result).toEqual(expected);
+    it('should be true on /about route', async () => {
+      await router.navigate(['/about']);
+      await fixture.whenStable();
+      expect(fixture.componentInstance.isAbout()).toBe(true);
     });
   });
 });

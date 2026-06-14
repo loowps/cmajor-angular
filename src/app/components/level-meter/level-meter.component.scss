@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.meters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.meter {
+  display: flex;
+  gap: 16px;
+  place-items: center;
+}
+
+.label {
+  width: 1ch;
+  font-size: 0.8rem;
+  color: #cfd2d6;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  height: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  background:
+    linear-gradient(#2a2d30, #2a2d30) right / 14px 100% no-repeat,
+    linear-gradient(to right, #60b0ed 0%, #60b0ed 70%, #e6d22e 88%, #d6432e 100%);
+}
+
+.unlit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #2a2d30;
+}
+
+.peak {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  background: #f8f8f8;
+  z-index: 1;
+}
+
+.clip-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  z-index: 2;
+  background: #2a2d30;
+  transition: background-color 150ms ease;
+
+  &.active {
+    background: #ff3520;
+  }
+}

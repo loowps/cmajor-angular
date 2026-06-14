@@ -124,28 +124,31 @@ export interface PatchConnection {
   // region Listener methods
 
   /**
-   * Attaches a listener function which will be called whenever an event passes through a specific endpoint.
-   * This can be used to monitor both input and output endpoints.
-   * The listener function will be called with an argument which is the value of the event.
+   * Attaches a listener function which will receive updates with the events or audio data being
+   * sent or received by an endpoint. This can be used to monitor both input and output endpoints.
+   *
+   * For an event or value endpoint, the listener is called with the new value. For a stream endpoint
+   * shaped like audio, the listener receives min/max chunks whose size is set by the granularity.
    *
    * @param endpointID
    * @param listener
+   * @param granularity - for stream endpoints, the number of frames per chunk
+   * @param sendFullAudioData - if true, the listener receives the full frame data instead of min/max
    */
-  addEndpointEventListener(
+  addEndpointListener(
     endpointID: PatchConnectionEndpoint,
     listener: (value: any) => void,
+    granularity?: number,
+    sendFullAudioData?: boolean,
   ): void;
 
   /**
-   * Removes a listener that was previously added with addEndpointEventListener()
+   * Removes a listener that was previously added with addEndpointListener()
    *
    * @param endpointID
    * @param listener
    */
-  removeEndpointEventListener(
-    endpointID: PatchConnectionEndpoint,
-    listener: (value: any) => void,
-  ): void;
+  removeEndpointListener(endpointID: PatchConnectionEndpoint, listener: (value: any) => void): void;
 
   /**
    * Request the current value for a given input endpoint
